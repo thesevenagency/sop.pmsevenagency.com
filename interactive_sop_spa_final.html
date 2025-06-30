@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- 
         Chosen Palette: Elegant Neutral & Gold
-        Application Structure Plan: The SPA is structured not by chapters, but by user tasks and roles to facilitate quick access to information. Key sections are 'Team & Roles', 'Core Principles', 'Event Lifecycle', 'Vendor Standards', and 'Sanctions'. A powerful search bar is the primary interaction point, allowing users to instantly find rules without navigating. This task-oriented design is superior to a linear document for on-the-job use-cases where time is critical.
+        Application Structure Plan: The SPA is structured not by chapters, but by user tasks and roles to facilitate quick access to information. Key sections are 'Team & Roles', 'Core Principles', 'Event Lifecycle', 'Vendor Standards', and 'Admin & Contacts'. A powerful search bar is the primary interaction point, allowing users to instantly find rules without navigating. This task-oriented design is superior to a linear document for on-the-job use-cases where time is critical.
         Visualization & Content Choices: The text-heavy report is transformed using interactive elements. Rules are presented in cards for scannability. An interactive tab system ('Event Lifecycle') organizes processes chronologically. A dropdown filter in 'Vendor Standards' allows users to see rules for specific vendor types. The search bar provides instant, full-text search across the entire SOP. This turns a passive document into an active, searchable tool.
         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
     -->
@@ -75,7 +75,7 @@
                     <a href="#principles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Core Principles</a>
                     <a href="#lifecycle" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Event Lifecycle</a>
                     <a href="#standards" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Vendor Standards</a>
-                    <a href="#sanctions" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Sanctions</a>
+                    <a href="#admin" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Admin & Contacts</a>
                 </nav>
                 <div class="md:hidden">
                     <button id="mobile-menu-button" class="text-gray-800">
@@ -90,7 +90,7 @@
             <a href="#principles" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Core Principles</a>
             <a href="#lifecycle" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Event Lifecycle</a>
             <a href="#standards" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Vendor Standards</a>
-            <a href="#sanctions" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Sanctions</a>
+            <a href="#admin" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Admin & Contacts</a>
         </div>
     </header>
 
@@ -273,10 +273,10 @@
             
             <hr class="my-12 border-gray-200">
             
-            <!-- Section: Sanctions & Admin -->
-            <section id="sanctions" data-section class="py-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Administration & Sanctions</h2>
-                 <div class="grid md:grid-cols-2 gap-8 searchable-content">
+            <!-- Section: Admin & Contacts -->
+            <section id="admin" data-section class="py-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Administration, Sanctions & Emergency Contacts</h2>
+                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 searchable-content">
                     <div class="card p-6">
                         <h3 class="font-bold text-lg text-gray-900">Vendor Management</h3>
                         <ul class="mt-2 text-gray-600 list-disc list-inside space-y-2">
@@ -289,6 +289,20 @@
                         <h3 class="font-bold text-lg text-gray-900">Sanctions & Penalties</h3>
                         <p class="mt-2 text-gray-600"><strong>For Internal Team:</strong> A 3-strike system applies. 1st Violation: Written Warning. 2nd Violation: Loss of payment for the event. 3rd Violation: Formal review with management, which may lead to termination.</p>
                         <p class="mt-2 text-gray-600"><strong>For Vendors:</strong> 1st Violation: Written Warning. 2nd Violation: The vendor will not be paid for the event and must meet with the Head Manager to discuss the issue. Future work is not guaranteed.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-lg text-gray-900">Emergency Contacts</h3>
+                        <p class="mt-2 text-gray-600">For urgent matters that cannot be resolved by the on-site PM, contact the appropriate department.</p>
+                        <ul class="mt-4 space-y-2">
+                            <li>
+                                <strong class="block">Head Manager:</strong>
+                                <a href="mailto:head@liga.tennis" class="text-c09a58 hover:underline">head@liga.tennis</a>
+                            </li>
+                            <li>
+                                <strong class="block">Finance Department:</strong>
+                                <a href="mailto:finance@thesevenagency.com" class="text-c09a58 hover:underline">finance@thesevenagency.com</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </section>
