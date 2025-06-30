@@ -15,6 +15,7 @@
         - Goal: Organize Process -> Viz: Interactive Timeline & HTML/CSS Flowchart. Interaction: Clickable tabs reveal stage-specific rules. Justification: Chronological flow is more intuitive for event planning than a simple list of rules. The PO flowchart visual makes the anti-fraud protocol unambiguous. Method: Custom HTML/CSS/JS.
         - Goal: Quick Information Retrieval -> Viz: Filterable Content Blocks. Interaction: A dropdown menu for vendor standards and a text input for search. Justification: Allows users to instantly isolate the exact information they need, drastically improving efficiency over manual searching. Method: JS data object and filtering logic.
         - Goal: Inform/Compare -> Viz: Styled HTML tables and cards. Interaction: Static display for clarity. Justification: Used for presenting clear-cut information like sanctions or role responsibilities where complex interaction is unnecessary. Method: Tailwind CSS.
+        - Goal: Visual Clarification -> Viz: Image Modals. Interaction: Click a button to show a reference image in a popup. Justification: Adds visual context to text-based standards like uniforms or decor quality without cluttering the main UI. Method: HTML/CSS/JS for modal.
         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
     -->
     <style>
@@ -175,6 +176,18 @@
             </section>
         </div>
     </main>
+
+    <!-- Modal Structure -->
+    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white p-4 rounded-lg shadow-2xl max-w-3xl max-h-[90vh] relative">
+            <button id="close-modal" class="absolute -top-3 -right-3 bg-white rounded-full p-1 text-slate-700 hover:text-red-500 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <img id="modal-image" src="" alt="Visual Reference" class="max-w-full max-h-[80vh] object-contain rounded">
+        </div>
+    </div>
     
     <footer class="bg-slate-800 text-white mt-16">
         <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
@@ -196,6 +209,7 @@
                 {
                     title: "2.1. Appearance & Grooming",
                     icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>`,
+                    image: 'https://placehold.co/800x600/e2e8f0/475569?text=Uniform+Examples',
                     content: `
                         <p class="font-semibold mb-2 text-slate-800">Uniforms:</p>
                         <ul class="list-disc list-inside space-y-1 mb-4">
@@ -273,7 +287,7 @@
                                 <h4 class="text-xl font-bold text-slate-800 mb-3">3.2. Official Booking Procedure</h4>
                                 <ol class="list-decimal list-inside space-y-2">
                                     <li><strong>Email is the Only Channel:</strong> All vendor bookings must be initiated and confirmed in writing via <strong>7agency.bookings@gmail.com</strong>. Using personal email, WhatsApp, or verbal agreements is strictly forbidden.</li>
-                                    <li><strong>PO Attachment:</strong> The approved and numbered PO **must** be attached to the initial booking email.</li>
+                                    <li><strong>PO Attachment:</strong> The approved and numbered PO <strong>must</strong> be attached to the initial booking email.</li>
                                     <li><strong>Vendor Confirmation:</strong> The vendor must reply to the <strong>7agency.bookings@gmail.com</strong> email to confirm acceptance.</li>
                                     <li><strong>Documentation:</strong> The PM is responsible for saving all correspondence in the client's project folder.</li>
                                 </ol>
@@ -347,7 +361,7 @@
                         <li><strong>Client Direction:</strong> Proactively direct the couple and guests to ensure the best possible shots. Be creative and manage the photoshoots professionally.</li>
                         <li><strong>Deliverables:</strong> Editing process cannot exceed 2-4 weeks. Deliverables are for <strong>edited files only</strong>. Minimum photo counts are determined by package (e.g., 2-hours = 150 edited, 8-hours = 400 edited). Final files delivered via cloud link to the PM and MM.</li>
                     </ul>` },
-                { id: "decor", title: "Florist, Decorations & Furniture", content: `
+                { id: "decor", title: "Florist, Decorations & Furniture", image: 'https://placehold.co/800x600/e2e8f0/475569?text=Good+vs+Bad+Decor', content: `
                      <ul class="list-disc list-inside space-y-2">
                         <li><strong>Readiness:</strong> All decor and furniture must be completely set up at least 30 minutes before the ceremony start time.</li>
                         <li><strong>Quality:</strong> Final setup must <strong>exactly match</strong> the client's approved design. All flowers must be fresh. All furniture must be clean and undamaged.</li>
@@ -382,6 +396,27 @@
         };
 
         document.addEventListener('DOMContentLoaded', function() {
+            const imageModal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            const closeModalButton = document.getElementById('close-modal');
+
+            function openModal(imageUrl) {
+                modalImage.src = imageUrl;
+                imageModal.classList.remove('hidden');
+            }
+
+            function closeModal() {
+                imageModal.classList.add('hidden');
+                modalImage.src = '';
+            }
+
+            closeModalButton.addEventListener('click', closeModal);
+            imageModal.addEventListener('click', (e) => {
+                if (e.target === imageModal) {
+                    closeModal();
+                }
+            });
+
             const rolesContainer = document.querySelector('#roles .grid');
             sopData.roles.forEach(role => {
                 const card = document.createElement('div');
@@ -397,12 +432,17 @@
             sopData.conduct.forEach(item => {
                 const section = document.createElement('div');
                 section.className = 'bg-white p-6 rounded-lg shadow-md';
+                let imageButton = '';
+                if(item.image) {
+                     imageButton = `<button data-img-src="${item.image}" class="visual-ref-btn mt-4 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">Show Visual Reference</button>`;
+                }
                 section.innerHTML = `
                     <div class="flex items-start space-x-4">
                         <div class="flex-shrink-0">${item.icon}</div>
                         <div>
                             <h3 class="text-xl font-bold text-slate-800 mb-3">${item.title}</h3>
                             <div class="text-slate-600 space-y-2">${item.content}</div>
+                            ${imageButton}
                         </div>
                     </div>
                 `;
@@ -414,11 +454,22 @@
                  const card = document.createElement('div');
                  card.id = `vendor-${vendor.id}`;
                  card.className = 'vendor-card bg-white p-6 rounded-lg shadow-md';
+                 let imageButton = '';
+                 if (vendor.image) {
+                    imageButton = `<button data-img-src="${vendor.image}" class="visual-ref-btn mt-4 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">Show Visual Reference</button>`;
+                 }
                  card.innerHTML = `
                     <h3 class="text-xl font-bold text-slate-800 mb-3">${vendor.title}</h3>
                     <div class="text-slate-600">${vendor.content}</div>
+                    ${imageButton}
                  `;
                  vendorContentContainer.appendChild(card);
+            });
+            
+            document.body.addEventListener('click', function(e) {
+                if (e.target.classList.contains('visual-ref-btn')) {
+                    openModal(e.target.dataset.imgSrc);
+                }
             });
 
             const vendorFilter = document.getElementById('vendor-filter');
@@ -522,9 +573,11 @@
                 
                 const results = [];
 
-                const checkAndAdd = (item, category, title) => {
-                    if (item.title.toLowerCase().includes(searchTerm) || item.content.toLowerCase().includes(searchTerm)) {
-                        results.push({ category, title: item.title, content: item.content });
+                const checkAndAdd = (item, category) => {
+                    let contentToCheck = item.content || '';
+                    let titleToCheck = item.title || '';
+                    if (titleToCheck.toLowerCase().includes(searchTerm) || contentToCheck.toLowerCase().includes(searchTerm)) {
+                        results.push({ category, title: titleToCheck, content: contentToCheck });
                     }
                 };
                 
