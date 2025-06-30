@@ -7,12 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600;6..96,700&display=swap" rel="stylesheet">
     <!-- 
-        Chosen Palette: Calm Harmony (Slate & Amber)
+        Chosen Palette: Brand Standards (Deep Blue, Light Blue, Soft Background, Powder Pink)
         Application Structure Plan: A role-based and task-based single-page application. The structure prioritizes usability over mirroring the original document's chapters. Key features include a 'Quick Access' dashboard, an interactive 'Event Lifecycle' timeline, and filterable 'Vendor Standards'. This design allows users, like Project Managers or vendors, to find critical information relevant to their immediate tasks (e.g., "What's the booking process?") without navigating a linear document. The interactive timeline and vendor filter are specifically designed to make complex processes and specific standards digestible and quickly accessible, which is crucial in a fast-paced event environment.
         Visualization & Content Choices: 
-        - Goal: Organize Process -> Viz: Interactive Timeline & HTML/CSS Flowchart. Interaction: Clickable tabs reveal stage-specific rules. Justification: Chronological flow is more intuitive for event planning than a simple list of rules. The PO flowchart visual makes the anti-fraud protocol unambiguous. Method: Custom HTML/CSS/JS.
+        - Goal: Organize Process -> Viz: Interactive Timeline & Image-based Flowchart. Interaction: Clickable tabs reveal stage-specific rules. Justification: Chronological flow is more intuitive for event planning than a simple list of rules. The PO flowchart visual makes the anti-fraud protocol unambiguous. Method: Custom HTML/CSS/JS with image modals.
         - Goal: Quick Information Retrieval -> Viz: Filterable Content Blocks. Interaction: A dropdown menu for vendor standards and a text input for search. Justification: Allows users to instantly isolate the exact information they need, drastically improving efficiency over manual searching. Method: JS data object and filtering logic.
         - Goal: Inform/Compare -> Viz: Styled HTML tables and cards. Interaction: Static display for clarity. Justification: Used for presenting clear-cut information like sanctions or role responsibilities where complex interaction is unnecessary. Method: Tailwind CSS.
         - Goal: Visual Clarification -> Viz: Image Modals. Interaction: Click a button to show a reference image in a popup. Justification: Adds visual context to text-based standards like uniforms or decor quality without cluttering the main UI. Method: HTML/CSS/JS for modal.
@@ -20,76 +20,53 @@
     -->
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* slate-50 */
-        }
-        .flowchart-line {
-            position: relative;
-        }
-        .flowchart-line::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 100%;
-            width: 2rem; 
-            height: 2px;
-            background-color: #fbbf24; /* amber-400 */
-        }
-        .flowchart-line-vertical::before {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 2rem;
-            background-color: #fbbf24; /* amber-400 */
-        }
-        .flowchart-card:last-child .flowchart-line::after {
-            display: none;
-        }
-         @media (max-width: 768px) {
-            .flowchart-line::after {
-                display: none;
-            }
-            .flowchart-line-vertical::before {
-                display: block;
-            }
-        }
-        @media (min-width: 769px) {
-            .flowchart-line-vertical::before {
-                display: none;
-            }
+            font-family: 'Bodoni Moda', serif;
+            background-color: #f5f1e6; /* Soft Background */
+            color: #2e3853; /* Deep Blue */
         }
         .active-nav {
-            color: #d97706; /* amber-600 */
-            border-bottom-color: #d97706;
+            color: #2e3853; 
+            border-bottom-color: #acbae0; /* Light Blue */
         }
         .active-tab {
-             background-color: #f59e0b; /* amber-500 */
-             color: #ffffff;
+             background-color: #acbae0; /* Light Blue */
+             color: #2e3853;
         }
+        .highlight {
+            color: #acbae0; /* Light Blue */
+        }
+        .card-bg {
+            background-color: #dbcac0; /* Powder Pink */
+        }
+         .button-primary {
+            background-color: #acbae0; /* Light Blue */
+            color: #2e3853;
+         }
+         .button-primary:hover {
+            background-color: #98a9d1;
+         }
     </style>
 </head>
-<body class="text-slate-700">
+<body class="">
 
-    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+    <header class="bg-[#f5f1e6]/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
-                    <span class="text-xl font-bold text-slate-800">The Seven Agency SOP</span>
+                    <!-- LOGO REPLACEMENT: Replace the span below with: <img src="URL_TO_YOUR_LOGO.png" alt="The Seven Agency Logo" class="h-10 w-auto"> -->
+                    <span class="text-xl font-bold">The Seven Agency SOP</span>
                 </div>
                 <div class="hidden md:block">
                     <nav id="desktop-nav" class="flex items-center space-x-4">
-                        <a href="#roles" class="text-slate-600 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Team & Roles</a>
-                        <a href="#conduct" class="text-slate-600 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Code of Conduct</a>
-                        <a href="#lifecycle" class="text-slate-600 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Event Lifecycle</a>
-                        <a href="#vendors" class="text-slate-600 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Vendor Standards</a>
-                        <a href="#sanctions" class="text-slate-600 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Sanctions</a>
+                        <a href="#roles" class="hover:text-[#2e3853] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Team & Roles</a>
+                        <a href="#conduct" class="hover:text-[#2e3853] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Code of Conduct</a>
+                        <a href="#lifecycle" class="hover:text-[#2e3853] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Event Lifecycle</a>
+                        <a href="#vendors" class="hover:text-[#2e3853] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Vendor Standards</a>
+                        <a href="#sanctions" class="hover:text-[#2e3853] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Sanctions</a>
                     </nav>
                 </div>
                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-500 hover:text-slate-700 hover:bg-slate-100 focus:outline-none">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md focus:outline-none">
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                         </svg>
@@ -99,11 +76,11 @@
         </div>
          <div id="mobile-menu" class="md:hidden hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#roles" class="text-slate-600 hover:text-amber-600 block px-3 py-2 rounded-md text-base font-medium">Team & Roles</a>
-                <a href="#conduct" class="text-slate-600 hover:text-amber-600 block px-3 py-2 rounded-md text-base font-medium">Code of Conduct</a>
-                <a href="#lifecycle" class="text-slate-600 hover:text-amber-600 block px-3 py-2 rounded-md text-base font-medium">Event Lifecycle</a>
-                <a href="#vendors" class="text-slate-600 hover:text-amber-600 block px-3 py-2 rounded-md text-base font-medium">Vendor Standards</a>
-                <a href="#sanctions" class="text-slate-600 hover:text-amber-600 block px-3 py-2 rounded-md text-base font-medium">Sanctions</a>
+                <a href="#roles" class="block px-3 py-2 rounded-md text-base font-medium">Team & Roles</a>
+                <a href="#conduct" class="block px-3 py-2 rounded-md text-base font-medium">Code of Conduct</a>
+                <a href="#lifecycle" class="block px-3 py-2 rounded-md text-base font-medium">Event Lifecycle</a>
+                <a href="#vendors" class="block px-3 py-2 rounded-md text-base font-medium">Vendor Standards</a>
+                <a href="#sanctions" class="block px-3 py-2 rounded-md text-base font-medium">Sanctions</a>
             </div>
         </div>
     </header>
@@ -111,10 +88,10 @@
     <main class="container mx-auto p-4 sm:p-6 lg:p-8">
         
         <section id="dashboard" class="text-center mb-16">
-            <h1 class="text-4xl font-bold text-slate-900 mb-4">Interactive Standard Operating Procedure</h1>
-            <p class="text-lg text-slate-600 max-w-3xl mx-auto">Your quick-access guide to flawless event execution. Find what you need, when you need it.</p>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Interactive Standard Operating Procedure</h1>
+            <p class="text-lg max-w-3xl mx-auto">Your quick-access guide to flawless event execution. Find what you need, when you need it.</p>
              <div class="mt-8">
-                <input id="search-bar" type="text" placeholder="Search for a rule or topic (e.g., 'uniform', 'payment')..." class="w-full max-w-xl p-3 border border-slate-300 rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition">
+                <input id="search-bar" type="text" placeholder="Search for a rule or topic (e.g., 'uniform', 'payment')..." class="w-full max-w-xl p-3 border border-[#dbcac0] rounded-lg shadow-sm focus:ring-2 focus:ring-[#acbae0] focus:border-[#acbae0] transition bg-white">
             </div>
         </section>
 
@@ -122,39 +99,35 @@
 
         <div id="main-content">
             <section id="roles" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-slate-800 mb-2">Chapter 1: Our Team: Roles & Responsibilities</h2>
-                <p class="mb-8 text-slate-600">Clarity in our roles is the foundation of a successful event. Every team member must understand their function and the functions of those around them.</p>
+                <h2 class="text-3xl font-bold mb-8">Chapter 1: Our Team: Roles & Responsibilities</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Roles will be inserted here by JS -->
                 </div>
             </section>
 
             <section id="conduct" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-slate-800 mb-2">Chapter 2: The Code of Conduct</h2>
-                <p class="mb-8 text-slate-600">This code applies to everyone representing The Seven Agency. Adherence is the minimum standard of professionalism we expect at all times.</p>
+                <h2 class="text-3xl font-bold mb-8">Chapter 2: The Code of Conduct</h2>
                 <div class="space-y-8">
                     <!-- Code of Conduct sections will be inserted here by JS -->
                 </div>
             </section>
 
             <section id="lifecycle" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-slate-800 mb-2">Chapter 3: The Event Lifecycle</h2>
-                <p class="mb-8 text-slate-600">Follow the event process from start to finish. Click on a stage to see the detailed procedures. This is your chronological guide to event management.</p>
-                 <div class="flex flex-wrap justify-center gap-2 mb-8 border-b border-slate-200 pb-4">
-                    <button data-tab="booking" class="lifecycle-tab px-4 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-amber-100 transition">Booking & Financial Protocol</button>
-                    <button data-tab="preparation" class="lifecycle-tab px-4 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-amber-100 transition">Pre-Event Preparation</button>
-                    <button data-tab="operations" class="lifecycle-tab px-4 py-2 text-sm font-semibold text-slate-600 rounded-lg hover:bg-amber-100 transition">On-the-Day Operations</button>
+                <h2 class="text-3xl font-bold mb-8">Chapter 3: The Event Lifecycle</h2>
+                 <div class="flex flex-wrap justify-center gap-2 mb-8 border-b border-[#dbcac0] pb-4">
+                    <button data-tab="booking" class="lifecycle-tab px-4 py-2 text-sm font-semibold rounded-lg hover:bg-[#dbcac0] transition">Booking & Financial Protocol</button>
+                    <button data-tab="preparation" class="lifecycle-tab px-4 py-2 text-sm font-semibold rounded-lg hover:bg-[#dbcac0] transition">Pre-Event Preparation</button>
+                    <button data-tab="operations" class="lifecycle-tab px-4 py-2 text-sm font-semibold rounded-lg hover:bg-[#dbcac0] transition">On-the-Day Operations</button>
                 </div>
-                <div id="lifecycle-content" class="bg-white p-6 rounded-lg shadow">
+                <div id="lifecycle-content" class="bg-[#dbcac0] p-6 rounded-lg shadow">
                     <!-- Lifecycle content will be inserted here -->
                 </div>
             </section>
 
             <section id="vendors" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-slate-800 mb-2">Chapter 4: Vendor-Specific Quality Standards</h2>
-                 <p class="mb-6 text-slate-600">All vendors must first adhere to the Code of Conduct. Use the dropdown below to select a vendor category and view their additional, non-negotiable technical standards.</p>
+                <h2 class="text-3xl font-bold mb-8">Chapter 4: Vendor-Specific Quality Standards</h2>
                 <div class="mb-6">
-                    <select id="vendor-filter" class="w-full max-w-md p-3 border border-slate-300 rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition">
+                    <select id="vendor-filter" class="w-full max-w-md p-3 border border-[#dbcac0] rounded-lg shadow-sm focus:ring-2 focus:ring-[#acbae0] focus:border-[#acbae0] transition bg-white">
                         <option value="all">Show All Vendors</option>
                         <option value="photo_video">Photo & Video</option>
                         <option value="decor">Florist, Decorations & Furniture</option>
@@ -168,8 +141,7 @@
             </section>
 
             <section id="sanctions" class="mb-16 scroll-mt-20">
-                 <h2 class="text-3xl font-bold text-slate-800 mb-2">Chapter 5: Sanctions & Enforcement</h2>
-                 <p class="mb-8 text-slate-600">Violation of this SOP will result in clear and consistent consequences.</p>
+                 <h2 class="text-3xl font-bold mb-8">Chapter 5: Sanctions & Enforcement</h2>
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                      <!-- Sanctions content will be inserted here by JS -->
                  </div>
@@ -180,7 +152,7 @@
     <!-- Modal Structure -->
     <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
         <div class="bg-white p-4 rounded-lg shadow-2xl max-w-3xl max-h-[90vh] relative">
-            <button id="close-modal" class="absolute -top-3 -right-3 bg-white rounded-full p-1 text-slate-700 hover:text-red-500 transition">
+            <button id="close-modal" class="absolute -top-3 -right-3 bg-white rounded-full p-1 text-gray-700 hover:text-red-500 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -189,10 +161,10 @@
         </div>
     </div>
     
-    <footer class="bg-slate-800 text-white mt-16">
+    <footer class="bg-[#2e3853] text-white mt-16">
         <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
             <p>&copy; 2025 The Seven Agency. All Rights Reserved.</p>
-            <p>Version 2.0 (Last Updated: June 30, 2025)</p>
+            <p>Version 2.2 (Last Updated: June 30, 2025)</p>
         </div>
     </footer>
 
@@ -207,35 +179,34 @@
             ],
             conduct: [
                 {
-                    title: "2.1. Appearance & Grooming",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>`,
-                    image: 'https://placehold.co/800x600/e2e8f0/475569?text=Uniform+Examples',
+                    title: "2.1. Team Uniform Guide",
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 highlight" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>`,
+                    image: 'http://googleusercontent.com/image_generation_content/2',
                     content: `
-                        <p class="font-semibold mb-2 text-slate-800">Uniforms:</p>
-                        <ul class="list-disc list-inside space-y-1 mb-4">
-                            <li><strong>Preparation/Setup:</strong> During setup and when not visible to clients, team members should wear the grey company T-shirt or a plain black/dark T-shirt.</li>
-                            <li><strong>Ceremony Only Events:</strong> The standard uniform is the company T-shirt (grey or green) or a plain white shirt with clean, dark-colored pants and closed-toe shoes.</li>
-                            <li><strong>Events with Reception:</strong> A single, professional uniform will be designated by the PM for the event (e.g., all-black attire; white shirt and black pants).</li>
-                            <li><strong>Vendors:</strong> Must wear their own professional uniform. If unavailable, the standard is a plain black shirt, black pants, and clean, closed-toe shoes. No large prints, shorts, or sandals.</li>
-                        </ul>
-                        <p class="font-semibold mb-2 text-slate-800">Grooming & Hygiene:</p>
-                        <ul class="list-disc list-inside space-y-1">
-                             <li>All team members must maintain excellent personal hygiene. Use of deodorant or perfume is required.</li>
-                             <li>Uniforms must be clean and ironed. Nails must be clean and trimmed.</li>
-                             <li>Shoes must be clean. For beach weddings, specific exceptions may be made by the PM.</li>
+                        <p>All team members must adhere to the professional uniform standards to present a cohesive and polished image to our clients. Click the button below for visual examples.</p>
+                        <ul class="list-disc list-inside space-y-1 mt-4">
+                            <li><strong>Key Combinations:</strong> All-black attire, or a white shirt paired with black pants/skirt.</li>
+                            <li><strong>Semi-Formal Events:</strong> Company t-shirts may be approved by the PM for ceremony-only events.</li>
                         </ul>`
                 },
                 {
-                    title: "2.2. Attitude & Behaviour",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
+                    title: "2.2. Approved Headwear",
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 highlight" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6.16667 3.91667C6.16667 3.41472 6.56472 3.01667 7.06667 3.01667H16.9333C17.4353 3.01667 17.8333 3.41472 17.8333 3.91667V10.7185C17.8333 11.2335 17.7556 11.7454 17.6042 12.2361L15.8333 18.0833H8.16667L6.39583 12.2361C6.24444 11.7454 6.16667 11.2335 6.16667 10.7185V3.91667Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.16669 10.5166H17.8334" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+                    image: 'http://googleusercontent.com/image_generation_content/3',
                     content: `
-                        <p class="font-semibold mb-2 text-slate-800">Professionalism:</p>
+                        <p>Only approved, professional headwear is permitted. Sport caps are not allowed. Click the button below for visual examples of the approved hat styles.</p>`
+                },
+                {
+                    title: "2.3. Attitude & Behaviour",
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 highlight" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
+                    content: `
+                        <p class="font-semibold mb-2">Professionalism:</p>
                          <ul class="list-disc list-inside space-y-1 mb-4">
                             <li>Be friendly, positive, and solution-oriented.</li>
                             <li>Do not speak loudly. Never discuss personal matters or joke inappropriately within earshot of clients.</li>
                             <li>Move with purpose. Never say "it's not my job." We work as a team.</li>
                          </ul>
-                        <p class="font-semibold mb-2 text-slate-800">Restrictions:</p>
+                        <p class="font-semibold mb-2">Restrictions:</p>
                          <ul class="list-disc list-inside space-y-1">
                             <li><strong>NO ALCOHOL.</strong> Consumption during working hours is strictly forbidden.</li>
                             <li><strong>NO SMOKING</strong> in any client-facing areas. Permitted only in designated staff areas during breaks.</li>
@@ -244,14 +215,13 @@
                         </ul>`
                 },
                 {
-                    title: "2.3. Financial Integrity & Anti-Fraud Policy",
+                    title: "2.4. Financial Integrity & Anti-Fraud Policy",
                     icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
                     content: `
                         <p class="font-bold text-red-600 mb-2">This is a zero-tolerance policy.</p>
-                        <ul class="list-disc list-inside space-y-2 text-slate-800">
-                             <li>All financial matters, including vendor bookings and payments, <strong>must</strong> be handled exclusively through official company channels as outlined in this SOP.</li>
+                        <ul class="list-disc list-inside space-y-2">
+                             <li>All financial matters, including vendor bookings and payments, <strong>must</strong> be handled exclusively through official company channels.</li>
                              <li>Attempting to arrange side-deals, solicit or accept direct cash payments, or otherwise circumvent company financial protocols is strictly prohibited.</li>
-                             <li>Recommending unapproved vendors to clients for personal gain is forbidden.</li>
                              <li class="font-semibold">Violation of this policy will result in immediate removal from the event, termination of contract/employment, and potential legal action.</li>
                          </ul>`
                 },
@@ -262,65 +232,38 @@
                     content: `
                         <div class="space-y-6">
                            <div>
-                                <h4 class="text-xl font-bold text-slate-800 mb-3">3.1. The Purchase Order (PO) System</h4>
-                                <p class="mb-4 text-red-600 font-semibold bg-red-100 p-3 rounded-lg">No booking can be made without an approved Purchase Order (PO).</p>
-                                <div class="flex flex-col md:flex-row gap-4 justify-center items-stretch text-center">
-                                    <div class="flowchart-card flowchart-line flowchart-line-vertical flex-1 bg-slate-50 p-4 rounded-lg border border-slate-200 shadow-sm">
-                                        <div class="font-bold text-amber-600 mb-2">Step 1</div>
-                                        <p class="text-sm">PM identifies need and fills out PO form with official price.</p>
-                                    </div>
-                                    <div class="flowchart-card flowchart-line flowchart-line-vertical flex-1 bg-slate-50 p-4 rounded-lg border border-slate-200 shadow-sm">
-                                        <div class="font-bold text-amber-600 mb-2">Step 2</div>
-                                        <p class="text-sm">PM submits PO to Head Project Manager (HPM) for approval.</p>
-                                    </div>
-                                    <div class="flowchart-card flowchart-line flowchart-line-vertical flex-1 bg-slate-50 p-4 rounded-lg border border-slate-200 shadow-sm">
-                                        <div class="font-bold text-amber-600 mb-2">Step 3</div>
-                                        <p class="text-sm">HPM approves, signs, and assigns a unique PO number.</p>
-                                    </div>
-                                    <div class="flowchart-card flex-1 bg-green-100 p-4 rounded-lg border border-green-300 shadow-sm">
-                                        <div class="font-bold text-green-700 mb-2">Step 4</div>
-                                        <p class="text-sm text-green-800">PM proceeds with the official booking via email.</p>
-                                    </div>
-                                </div>
+                                <h4 class="text-xl font-bold mb-3">3.1. The Purchase Order (PO) System</h4>
+                                <p class="mb-4 text-red-600 font-semibold">No booking can be made without an approved Purchase Order (PO).</p>
+                                 <button data-img-src="http://googleusercontent.com/image_generation_content/6" class="visual-ref-btn w-full mb-4">
+                                     <img src="http://googleusercontent.com/image_generation_content/6" alt="Purchase Order Flowchart" class="w-full h-auto rounded-lg shadow-md border border-[#dbcac0]">
+                                 </button>
+                                 <p class="text-center text-sm opacity-75">Click image to enlarge</p>
                            </div>
                            <div>
-                                <h4 class="text-xl font-bold text-slate-800 mb-3">3.2. Official Booking Procedure</h4>
+                                <h4 class="text-xl font-bold mb-3">3.2. Official Booking Procedure</h4>
                                 <ol class="list-decimal list-inside space-y-2">
-                                    <li><strong>Email is the Only Channel:</strong> All vendor bookings must be initiated and confirmed in writing via <strong>7agency.bookings@gmail.com</strong>. Using personal email, WhatsApp, or verbal agreements is strictly forbidden.</li>
-                                    <li><strong>PO Attachment:</strong> The approved and numbered PO <strong>must</strong> be attached to the initial booking email.</li>
-                                    <li><strong>Vendor Confirmation:</strong> The vendor must reply to the <strong>7agency.bookings@gmail.com</strong> email to confirm acceptance.</li>
-                                    <li><strong>Documentation:</strong> The PM is responsible for saving all correspondence in the client's project folder.</li>
+                                    <li><strong>Email is the Only Channel:</strong> All bookings must be initiated via <strong>7agency.bookings@gmail.com</strong>.</li>
+                                    <li><strong>PO Attachment:</strong> The approved and numbered PO **must** be attached to the initial booking email.</li>
+                                    <li><strong>Vendor Confirmation:</strong> The vendor must reply to the official email to confirm acceptance.</li>
                                 </ol>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold text-slate-800 mb-3">3.3. Vendor Selection & Pricing</h4>
-                                <ul class="list-disc list-inside space-y-2">
-                                    <li><strong>Appointed Vendors Only:</strong> Use vendors from the official "Appointed Vendor List."</li>
-                                    <li><strong>Master Price List:</strong> Prices must come from the official "Master Vendor Price List."</li>
-                                    <li><strong>Price Discrepancies:</strong> If a vendor quotes a higher price, do not agree. Notify the Development Manager immediately.</li>
-                                    <li><strong>Engaging New Vendors:</strong> Requires formal application and written pre-approval from HPM.</li>
-                                </ul>
                             </div>
                         </div>`
                 },
                 preparation: {
                     title: "Pre-Event Preparation",
                     content: `
-                        <div class="space-y-4">
+                        <div class="space-y-6">
                             <div>
-                                <h4 class="text-xl font-bold text-slate-800 mb-2">Technical Meetings</h4>
-                                <p>For all large events, a technical meeting with all key vendors, the PM, and venue staff is mandatory. The PM is responsible for finalizing all technical details and distributing the finalized rundown after this meeting.</p>
+                                <h4 class="text-xl font-bold mb-2">Ceremony Processional Order</h4>
+                                <p class="mb-4">This diagram shows the standard walking order for the wedding party. It must be reviewed before the technical meeting and rehearsal.</p>
+                                <button data-img-src="http://googleusercontent.com/image_generation_content/5" class="visual-ref-btn w-full">
+                                    <img src="http://googleusercontent.com/image_generation_content/5" alt="Ceremony Processional Order" class="w-full h-auto rounded-lg shadow-md border border-[#dbcac0]">
+                                </button>
+                                <p class="text-center text-sm opacity-75 mt-2">Click image to enlarge</p>
                             </div>
                             <div>
-                                <h4 class="text-xl font-bold text-slate-800 mb-2">Rundown & Layout</h4>
-                                <p>The PM is responsible for creating a detailed rundown and event layout. These must be distributed to the entire team and all vendors at least 72 hours before the event.</p>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold text-slate-800 mb-2">Venue Readiness</h4>
-                                <ul class="list-disc list-inside space-y-1">
-                                    <li><strong>Cleanliness:</strong> The immediate wedding area and its visible surroundings must be clean and free of debris.</li>
-                                    <li><strong>Privacy:</strong> The PM must ensure the ceremony area is private. Team members may be assigned to politely ask onlookers to keep their distance.</li>
-                                </ul>
+                                <h4 class="text-xl font-bold mb-2">Technical Meetings & Rundown</h4>
+                                <p>For all large events, a technical meeting with all key vendors is mandatory. The final rundown and layout must be distributed to all teams at least 72 hours before the event.</p>
                             </div>
                         </div>`
                 },
@@ -329,25 +272,18 @@
                     content: `
                         <div class="space-y-4">
                             <div>
-                                <h4 class="text-xl font-bold text-slate-800 mb-2">Client Arrival</h4>
+                                <h4 class="text-xl font-bold mb-2">Client Arrival</h4>
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>The venue, including all decorations and music, must be 100% ready <strong>before</strong> the client arrives. No last-minute setup should be visible.</li>
+                                    <li>The venue must be 100% ready <strong>before</strong> the client arrives. No last-minute setup should be visible.</li>
                                     <li>The uniformed team should be organized and ready to welcome the couple warmly.</li>
-                                    <li>The CM or PM will escort the couple and use a walkie-talkie to give the team a 5-minute arrival warning.</li>
+                                    <li>The CM or PM will give the team a 5-minute arrival warning via walkie-talkie.</li>
                                 </ul>
                             </div>
                             <div>
-                                <h4 class="text-xl font-bold text-slate-800 mb-2">Briefings</h4>
+                                <h4 class="text-xl font-bold mb-2">Briefings</h4>
                                  <ul class="list-disc list-inside space-y-1">
-                                    <li><strong>Team Briefing:</strong> The PM will conduct a brief meeting with the entire on-site team before the event begins to review the rundown and key responsibilities.</li>
-                                    <li><strong>Client Briefing:</strong> The CM or PM will conduct a brief (approx. 3 minutes), clear briefing with the couple and their wedding party to explain the processional order.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold text-slate-800 mb-2">Atmosphere</h4>
-                                <ul class="list-disc list-inside space-y-1">
-                                    <li>Background music must be playing as the client approaches the venue to create a welcoming atmosphere.</li>
-                                    <li>A microphone must always be available and used for the ceremony to ensure all guests can hear.</li>
+                                    <li><strong>Team Briefing:</strong> The PM will conduct a brief meeting with the entire on-site team before the event begins.</li>
+                                    <li><strong>Client Briefing:</strong> The CM or PM will conduct a brief (approx. 3 minutes) briefing with the couple and their wedding party.</li>
                                 </ul>
                             </div>
                         </div>`
@@ -358,10 +294,10 @@
                     <ul class="list-disc list-inside space-y-2">
                         <li><strong>Arrival:</strong> Punctuality is mandatory. Arrive with sufficient time to be fully set up and ready to begin work precisely at the contracted start time.</li>
                         <li><strong>Shot List:</strong> Must capture all key moments and details as outlined in the "Standard Shot List" (see Appendix).</li>
-                        <li><strong>Client Direction:</strong> Proactively direct the couple and guests to ensure the best possible shots. Be creative and manage the photoshoots professionally.</li>
-                        <li><strong>Deliverables:</strong> Editing process cannot exceed 2-4 weeks. Deliverables are for <strong>edited files only</strong>. Minimum photo counts are determined by package (e.g., 2-hours = 150 edited, 8-hours = 400 edited). Final files delivered via cloud link to the PM and MM.</li>
+                        <li><strong>Client Direction:</strong> Proactively direct the couple and guests to ensure the best possible shots.</li>
+                        <li><strong>Deliverables:</strong> Editing process cannot exceed 2-4 weeks. Deliverables are for <strong>edited files only</strong>. Final files delivered via cloud link to the PM and MM.</li>
                     </ul>` },
-                { id: "decor", title: "Florist, Decorations & Furniture", image: 'https://placehold.co/800x600/e2e8f0/475569?text=Good+vs+Bad+Decor', content: `
+                { id: "decor", title: "Florist, Decorations & Furniture", content: `
                      <ul class="list-disc list-inside space-y-2">
                         <li><strong>Readiness:</strong> All decor and furniture must be completely set up at least 30 minutes before the ceremony start time.</li>
                         <li><strong>Quality:</strong> Final setup must <strong>exactly match</strong> the client's approved design. All flowers must be fresh. All furniture must be clean and undamaged.</li>
@@ -372,10 +308,10 @@
                         <li><strong>Readiness:</strong> Bar and food stations must be fully set up and staffed 30 minutes before scheduled service time.</li>
                         <li><strong>Quality:</strong> Menu must exactly match the client's order. For "free flow" packages, ensuring adequate stock is the vendor's responsibility; running out is a service failure.</li>
                      </ul>` },
-                { id: "makeup", title: "Makeup & Hair", content: `
+                { id: "makeup", title: "Makeup & Hair", image: 'http://googleusercontent.com/image_generation_content/8', content: `
                      <ul class="list-disc list-inside space-y-2">
                         <li><strong>Arrival:</strong> Arrive at the client's location at least 15 minutes prior to the scheduled start time. The makeup artist must share their live location with the Project Manager and client while en route.</li>
-                        <li><strong>Hygiene:</strong> All tools must be clean and sanitized. Hairbrushes must be free of hair from previous clients. A face mask must be worn while working.</li>
+                        <li><strong>Hygiene:</strong> All tools must be clean and sanitized. A face mask must be worn while working. Click the button below for a visual reference.</li>
                         <li><strong>Quality:</strong> The final look must match the client's approved trial/inspiration photos. Use high-quality, professional products.</li>
                     </ul>` }
             ],
@@ -420,10 +356,10 @@
             const rolesContainer = document.querySelector('#roles .grid');
             sopData.roles.forEach(role => {
                 const card = document.createElement('div');
-                card.className = 'bg-white p-6 rounded-lg shadow-md transition hover:shadow-xl hover:-translate-y-1';
+                card.className = 'card-bg p-6 rounded-lg shadow-md transition hover:shadow-xl hover:-translate-y-1';
                 card.innerHTML = `
-                    <h3 class="text-xl font-bold text-slate-800 mb-3">${role.title}</h3>
-                    <p class="text-slate-600">${role.content}</p>
+                    <h3 class="text-xl font-bold mb-3">${role.title}</h3>
+                    <p>${role.content}</p>
                 `;
                 rolesContainer.appendChild(card);
             });
@@ -431,17 +367,17 @@
             const conductContainer = document.querySelector('#conduct .space-y-8');
             sopData.conduct.forEach(item => {
                 const section = document.createElement('div');
-                section.className = 'bg-white p-6 rounded-lg shadow-md';
+                section.className = 'card-bg p-6 rounded-lg shadow-md';
                 let imageButton = '';
                 if(item.image) {
-                     imageButton = `<button data-img-src="${item.image}" class="visual-ref-btn mt-4 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">Show Visual Reference</button>`;
+                     imageButton = `<button data-img-src="${item.image}" class="visual-ref-btn mt-4 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm button-primary">Show Visual Reference</button>`;
                 }
                 section.innerHTML = `
                     <div class="flex items-start space-x-4">
                         <div class="flex-shrink-0">${item.icon}</div>
                         <div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-3">${item.title}</h3>
-                            <div class="text-slate-600 space-y-2">${item.content}</div>
+                            <h3 class="text-xl font-bold mb-3">${item.title}</h3>
+                            <div class="space-y-2">${item.content}</div>
                             ${imageButton}
                         </div>
                     </div>
@@ -453,22 +389,23 @@
             sopData.vendors.forEach(vendor => {
                  const card = document.createElement('div');
                  card.id = `vendor-${vendor.id}`;
-                 card.className = 'vendor-card bg-white p-6 rounded-lg shadow-md';
+                 card.className = 'vendor-card card-bg p-6 rounded-lg shadow-md';
                  let imageButton = '';
                  if (vendor.image) {
-                    imageButton = `<button data-img-src="${vendor.image}" class="visual-ref-btn mt-4 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">Show Visual Reference</button>`;
+                    imageButton = `<button data-img-src="${vendor.image}" class="visual-ref-btn mt-4 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm button-primary">Show Visual Reference</button>`;
                  }
                  card.innerHTML = `
-                    <h3 class="text-xl font-bold text-slate-800 mb-3">${vendor.title}</h3>
-                    <div class="text-slate-600">${vendor.content}</div>
+                    <h3 class="text-xl font-bold mb-3">${vendor.title}</h3>
+                    <div class="space-y-2">${vendor.content}</div>
                     ${imageButton}
                  `;
                  vendorContentContainer.appendChild(card);
             });
             
             document.body.addEventListener('click', function(e) {
-                if (e.target.classList.contains('visual-ref-btn')) {
-                    openModal(e.target.dataset.imgSrc);
+                const button = e.target.closest('.visual-ref-btn');
+                if (button) {
+                    openModal(button.dataset.imgSrc);
                 }
             });
 
@@ -488,10 +425,10 @@
             const sanctionsContainer = document.querySelector('#sanctions .grid');
             sopData.sanctions.forEach(sanc => {
                 const card = document.createElement('div');
-                card.className = 'bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500';
+                card.className = 'card-bg p-6 rounded-lg shadow-md border-l-4 border-[#acbae0]';
                 card.innerHTML = `
-                    <h3 class="text-xl font-bold text-slate-800 mb-3">${sanc.title}</h3>
-                    <div class="text-slate-600">${sanc.content}</div>
+                    <h3 class="text-xl font-bold mb-3">${sanc.title}</h3>
+                    <div class="">${sanc.content}</div>
                 `;
                 sanctionsContainer.appendChild(card);
             });
@@ -501,7 +438,7 @@
             
             function showLifecycleContent(tabId) {
                 lifecycleContent.innerHTML = `
-                    <h3 class="text-2xl font-bold text-slate-800 mb-4">${sopData.lifecycle[tabId].title}</h3>
+                    <h3 class="text-2xl font-bold mb-4">${sopData.lifecycle[tabId].title}</h3>
                     <div>${sopData.lifecycle[tabId].content}</div>`;
                 
                 lifecycleTabs.forEach(t => {
@@ -590,16 +527,16 @@
                 if(results.length > 0) {
                      results.forEach(result => {
                         const resultEl = document.createElement('div');
-                        resultEl.className = 'bg-white p-6 rounded-lg shadow-md mb-4';
+                        resultEl.className = 'card-bg p-6 rounded-lg shadow-md mb-4';
                         resultEl.innerHTML = `
-                            <p class="text-sm font-semibold text-amber-600 mb-1">${result.category}</p>
-                            <h3 class="text-xl font-bold text-slate-800 mb-2">${result.title}</h3>
-                            <div class="text-slate-600">${result.content.replace(new RegExp(searchTerm, 'gi'), (match) => `<mark class="bg-amber-200">${match}</mark>`)}</div>
+                            <p class="text-sm font-semibold highlight mb-1">${result.category}</p>
+                            <h3 class="text-xl font-bold mb-2">${result.title}</h3>
+                            <div class="">${result.content.replace(new RegExp(searchTerm, 'gi'), (match) => `<mark class="bg-[#acbae0] bg-opacity-30">${match}</mark>`)}</div>
                         `;
                         searchResultsContainer.appendChild(resultEl);
                     });
                 } else {
-                     searchResultsContainer.innerHTML = `<p class="text-center text-slate-500">No results found for "${searchTerm}".</p>`;
+                     searchResultsContainer.innerHTML = `<p class="text-center">No results found for "${searchTerm}".</p>`;
                 }
             });
         });
