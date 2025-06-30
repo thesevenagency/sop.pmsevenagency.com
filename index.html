@@ -31,19 +31,42 @@
         .active-tab {
              background-color: #acbae0; /* Light Blue */
              color: #2e3853;
+             transform: translateY(-2px);
+             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
         .highlight {
             color: #acbae0; /* Light Blue */
         }
         .card-bg {
-            background-color: #dbcac0; /* Powder Pink */
+            background-color: #ffffff; /* Changed from Powder Pink for readability */
+            border: 1px solid #dbcac0; /* Kept Powder Pink as border */
         }
          .button-primary {
             background-color: #acbae0; /* Light Blue */
             color: #2e3853;
+            transition: all 0.2s ease-in-out;
          }
          .button-primary:hover {
             background-color: #98a9d1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+         }
+         .nav-link {
+            transition: all 0.2s ease-in-out;
+         }
+         .nav-link:hover {
+            color: #2e3853;
+            transform: translateY(-2px);
+         }
+         .lifecycle-tab {
+            transition: all 0.2s ease-in-out;
+         }
+         .card-interactive {
+            transition: all 0.2s ease-in-out;
+         }
+         .card-interactive:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
          }
     </style>
 </head>
@@ -58,11 +81,11 @@
                 </div>
                 <div class="hidden md:block">
                     <nav id="desktop-nav" class="flex items-center space-x-4">
-                        <a href="#roles" class="hover:text-[#2e3853] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Team & Roles</a>
-                        <a href="#conduct" class="hover:text-[#2e3853] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Code of Conduct</a>
-                        <a href="#lifecycle" class="hover:text-[#2e3853] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Event Lifecycle</a>
-                        <a href="#vendors" class="hover:text-[#2e3853] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Vendor Standards</a>
-                        <a href="#sanctions" class="hover:text-[#2e3853] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Sanctions</a>
+                        <a href="#roles" class="nav-link px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Team & Roles</a>
+                        <a href="#conduct" class="nav-link px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Code of Conduct</a>
+                        <a href="#lifecycle" class="nav-link px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Event Lifecycle</a>
+                        <a href="#vendors" class="nav-link px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Vendor Standards</a>
+                        <a href="#sanctions" class="nav-link px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Sanctions</a>
                     </nav>
                 </div>
                 <div class="md:hidden">
@@ -115,11 +138,11 @@
             <section id="lifecycle" class="mb-16 scroll-mt-20">
                 <h2 class="text-3xl font-bold mb-8">Chapter 3: The Event Lifecycle</h2>
                  <div class="flex flex-wrap justify-center gap-2 mb-8 border-b border-[#dbcac0] pb-4">
-                    <button data-tab="booking" class="lifecycle-tab px-4 py-2 text-sm font-semibold rounded-lg hover:bg-[#dbcac0] transition">Booking & Financial Protocol</button>
-                    <button data-tab="preparation" class="lifecycle-tab px-4 py-2 text-sm font-semibold rounded-lg hover:bg-[#dbcac0] transition">Pre-Event Preparation</button>
-                    <button data-tab="operations" class="lifecycle-tab px-4 py-2 text-sm font-semibold rounded-lg hover:bg-[#dbcac0] transition">On-the-Day Operations</button>
+                    <button data-tab="booking" class="lifecycle-tab px-4 py-2 text-sm font-semibold rounded-lg hover:bg-[#f5f1e6] hover:shadow-md hover:-translate-y-0.5">Booking & Financial Protocol</button>
+                    <button data-tab="preparation" class="lifecycle-tab px-4 py-2 text-sm font-semibold rounded-lg hover:bg-[#f5f1e6] hover:shadow-md hover:-translate-y-0.5">Pre-Event Preparation</button>
+                    <button data-tab="operations" class="lifecycle-tab px-4 py-2 text-sm font-semibold rounded-lg hover:bg-[#f5f1e6] hover:shadow-md hover:-translate-y-0.5">On-the-Day Operations</button>
                 </div>
-                <div id="lifecycle-content" class="bg-[#dbcac0] p-6 rounded-lg shadow">
+                <div id="lifecycle-content" class="bg-white border border-[#dbcac0] p-6 rounded-lg shadow-lg">
                     <!-- Lifecycle content will be inserted here -->
                 </div>
             </section>
@@ -164,7 +187,7 @@
     <footer class="bg-[#2e3853] text-white mt-16">
         <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
             <p>&copy; 2025 The Seven Agency. All Rights Reserved.</p>
-            <p>Version 2.2 (Last Updated: June 30, 2025)</p>
+            <p>Version 2.3 (Last Updated: June 30, 2025)</p>
         </div>
     </footer>
 
@@ -356,7 +379,7 @@
             const rolesContainer = document.querySelector('#roles .grid');
             sopData.roles.forEach(role => {
                 const card = document.createElement('div');
-                card.className = 'card-bg p-6 rounded-lg shadow-md transition hover:shadow-xl hover:-translate-y-1';
+                card.className = 'card-bg card-interactive p-6 rounded-lg shadow-md';
                 card.innerHTML = `
                     <h3 class="text-xl font-bold mb-3">${role.title}</h3>
                     <p>${role.content}</p>
@@ -367,7 +390,7 @@
             const conductContainer = document.querySelector('#conduct .space-y-8');
             sopData.conduct.forEach(item => {
                 const section = document.createElement('div');
-                section.className = 'card-bg p-6 rounded-lg shadow-md';
+                section.className = 'card-bg card-interactive p-6 rounded-lg shadow-md';
                 let imageButton = '';
                 if(item.image) {
                      imageButton = `<button data-img-src="${item.image}" class="visual-ref-btn mt-4 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm button-primary">Show Visual Reference</button>`;
@@ -389,7 +412,7 @@
             sopData.vendors.forEach(vendor => {
                  const card = document.createElement('div');
                  card.id = `vendor-${vendor.id}`;
-                 card.className = 'vendor-card card-bg p-6 rounded-lg shadow-md';
+                 card.className = 'vendor-card card-bg card-interactive p-6 rounded-lg shadow-md';
                  let imageButton = '';
                  if (vendor.image) {
                     imageButton = `<button data-img-src="${vendor.image}" class="visual-ref-btn mt-4 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm button-primary">Show Visual Reference</button>`;
