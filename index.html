@@ -1,422 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Seven Agency - Interactive SOP</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- 
-        Chosen Palette: Elegant Neutral & Gold
-        Application Structure Plan: The SPA is structured not by chapters, but by user tasks and roles to facilitate quick access to information. Key sections are 'Team & Roles', 'Core Principles', 'Event Lifecycle', 'Vendor Standards', and 'Admin & Contacts'. A powerful search bar is the primary interaction point, allowing users to instantly find rules without navigating. This task-oriented design is superior to a linear document for on-the-job use-cases where time is critical.
-        Visualization & Content Choices: The text-heavy report is transformed using interactive elements. Rules are presented in cards for scannability. An interactive tab system ('Event Lifecycle') organizes processes chronologically. A dropdown filter in 'Vendor Standards' allows users to see rules for specific vendor types. The search bar provides instant, full-text search across the entire SOP. This turns a passive document into an active, searchable tool.
-        CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
-    -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f7f4;
-            color: #333;
-        }
-        .nav-link {
-            transition: color 0.3s ease, border-bottom-color 0.3s ease;
-        }
-        .nav-link:hover {
-            color: #c09a58;
-            border-bottom-color: #c09a58;
-        }
-        .card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #e5e7eb;
-        }
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-        }
-        .search-container {
-            position: sticky;
-            top: 72px;
-            z-index: 40;
-            background: linear-gradient(to bottom, #f8f7f4 85%, transparent 100%);
-            padding-top: 1.5rem;
-            padding-bottom: 1.5rem;
-        }
-        .tab.active {
-            background-color: #3a3a3a;
-            color: #ffffff;
-        }
-        .tab:not(.active):hover {
-            background-color: #e5e7eb;
-        }
-        [data-section] {
-            scroll-margin-top: 200px;
-        }
-        .searchable-content {
-            padding: 1rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Seven Agency - Interactive SOP</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f7f4;
+    color: #333;
+}
+.nav-link {
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+}
+.nav-link:hover {
+    color: #c09a58;
+    border-bottom-color: #c09a58;
+}
+.card {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e5e7eb;
+}
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+}
+.section-block {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    padding: 2rem;
+    margin-bottom: 3rem;
+}
+.tab.active {
+    background-color: #3a3a3a;
+    color: #fff;
+}
+.tab:not(.active):hover {
+    background-color: #e5e7eb;
+}
+[data-section] {
+    scroll-margin-top: 200px;
+}
+h1, h2, h3 {
+    color: #1f2937;
+}
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #1f2937;
+}
+</style>
 </head>
 <body class="antialiased">
 
-    <!-- Header & Navigation -->
-    <header class="bg-white/80 backdrop-blur-lg shadow-sm fixed top-0 left-0 right-0 z-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-18">
-                <div class="flex-shrink-0">
-                    <h1 class="text-xl font-bold text-gray-800">The Seven Agency SOP</h1>
+<header class="bg-white/80 backdrop-blur-lg shadow-sm fixed top-0 left-0 right-0 z-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-18">
+            <h1 class="text-xl font-bold text-gray-800">The Seven Agency SOP</h1>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#roles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Team & Roles</a>
+                <a href="#principles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Core Principles</a>
+                <a href="#lifecycle" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Event Lifecycle</a>
+                <a href="#standards" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Vendor Standards</a>
+                <a href="#admin" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Admin & Contacts</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-28">
+
+    <section class="text-center py-16">
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">Interactive Standard Operating Procedure</h2>
+    </section>
+
+    <section class="section-block">
+        <h2 class="section-title">Important Notice</h2>
+        <p class="text-gray-700 mb-4">This SOP is mandatory for all team members and vendors. Please read carefully and follow every section to ensure excellence in our events.</p>
+    </section>
+
+    <section id="roles" class="section-block" data-section>
+        <h2 class="section-title">Team & Roles</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Project Manager (PM)</h3>
+                <p class="mt-2 text-gray-600">Leads the project lifecycle from booking to final execution, coordinates all team and vendors.</p>
+            </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Meeting Manager (MM)</h3>
+                <p class="mt-2 text-gray-600">Conducts pre-wedding client meetings, finalizes details, updates the Wedding Report.</p>
+            </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Client Manager (CM)</h3>
+                <p class="mt-2 text-gray-600">Assists the couple during the event, ensures Photography & Videography meet standards.</p>
+            </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Area Manager (AM)</h3>
+                <p class="mt-2 text-gray-600">Responsible for specific event zones, ensuring vendor performance and quality standards.</p>
+            </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Head Manager / Finance / Development</h3>
+                <p class="mt-2 text-gray-600">Oversees management, finance, and vendor approval processes.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="principles" class="section-block" data-section>
+        <h2 class="section-title">Core Principles</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Venue Cleanliness</h3>
+                <p class="mt-2 text-gray-600">Ceremony areas must be spotless, politely ask bystanders to move away during ceremonies.</p>
+            </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Follow the Rundown</h3>
+                <p class="mt-2 text-gray-600">Strict adherence to the event timeline is required, report delays immediately.</p>
+            </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Client Arrival</h3>
+                <p class="mt-2 text-gray-600">Client must arrive only when all preparations are 100% complete.</p>
+            </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Vendor Punctuality</h3>
+                <p class="mt-2 text-gray-600">Vendors must arrive on time, otherwise, payment is withheld.</p>
+            </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Approved Vendors Only</h3>
+                <p class="mt-2 text-gray-600">Only officially listed vendors may be used unless approved by management.</p>
+            </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Respect Client Orders</h3>
+                <p class="mt-2 text-gray-600">All services must match exactly what was ordered and confirmed in writing.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="lifecycle" class="section-block" data-section>
+        <h2 class="section-title">Event Lifecycle</h2>
+        <div class="flex justify-center mb-8">
+            <div class="flex space-x-2 bg-gray-200 p-1 rounded-full">
+                <button class="tab active px-4 py-2 rounded-full text-sm font-medium transition" data-tab="booking">Booking</button>
+                <button class="tab px-4 py-2 rounded-full text-sm font-medium transition" data-tab="prep">Preparation</button>
+                <button class="tab px-4 py-2 rounded-full text-sm font-medium transition" data-tab="day">Event Day</button>
+            </div>
+        </div>
+        <div>
+            <div class="tab-content" id="booking">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card p-6">
+                        <h3 class="font-bold text-lg">Vendor Booking</h3>
+                        <p class="mt-2 text-gray-600">All bookings via official company email only. Confirmation is mandatory.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-lg">Rundown Preparation</h3>
+                        <p class="mt-2 text-gray-600">Timeline must be finalized well before the wedding, depending on size.</p>
+                    </div>
                 </div>
-                <nav class="hidden md:flex items-center space-x-8">
-                    <a href="#roles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Team & Roles</a>
-                    <a href="#principles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Core Principles</a>
-                    <a href="#lifecycle" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Event Lifecycle</a>
-                    <a href="#standards" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Vendor Standards</a>
-                    <a href="#admin" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Admin & Contacts</a>
-                </nav>
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-gray-800">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                    </button>
+            </div>
+            <div class="tab-content hidden" id="prep">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card p-6">
+                        <h3 class="font-bold text-lg">Technical Meetings</h3>
+                        <p class="mt-2 text-gray-600">Mandatory pre-event meetings for key vendors, rehearsals for the couple.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-lg">Client Updates</h3>
+                        <p class="mt-2 text-gray-600">All last-minute client changes must be communicated to vendors promptly.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content hidden" id="day">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card p-6">
+                        <h3 class="font-bold text-lg">Client Briefing</h3>
+                        <p class="mt-2 text-gray-600">Provide a short, clear briefing to the couple upon arrival.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-lg">Atmosphere & Music</h3>
+                        <p class="mt-2 text-gray-600">Music must be played during guest arrival; microphones ready for ceremony.</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#roles" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Team & Roles</a>
-            <a href="#principles" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Core Principles</a>
-            <a href="#lifecycle" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Event Lifecycle</a>
-            <a href="#standards" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Vendor Standards</a>
-            <a href="#admin" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Admin & Contacts</a>
-        </div>
-    </header>
+    </section>
 
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-24">
-        <!-- Introduction -->
-        <section class="text-center py-16">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">Interactive Standard Operating Procedure</h1>
-        </section>
-
-        <!-- Note from Management -->
-        <section class="mb-16">
-            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-6 rounded-r-lg" role="alert">
-                <h3 class="font-bold text-lg">A Critical Update to Our Standard Operating Procedure (SOP)</h3>
-                <p class="mt-2">To all team members and vendor partners,</p>
-                <p class="mt-2">As our company evolves, it has become clear that our previous SOP no longer meets the high standards we set for ourselves and our clients. Due to past issues and outdated rules, we are implementing a necessary and comprehensive update.</p>
-                <p class="mt-2 font-bold">This revised SOP is no longer just a guideline; it is Rule Number One.</p>
-                <p class="mt-2">Adherence is mandatory for every member of our internal team and for every vendor partner on every event, without exception. Its purpose is to ensure we all operate with the same level of professionalism, integrity, and excellence. We require everyone to study this document thoroughly.</p>
+    <section id="standards" class="section-block" data-section>
+        <h2 class="section-title">Vendor & Team Standards</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Appearance</h3>
+                <p class="mt-2 text-gray-600">Professional uniform required for all staff; vendors must wear black attire.</p>
             </div>
-        </section>
-
-        <!-- Search Bar -->
-        <div class="search-container">
-            <div class="relative max-w-2xl mx-auto">
-                <input type="text" id="searchInput" placeholder="Search for a rule or topic (e.g., 'uniform', 'payment')..." class="w-full pl-5 pr-4 py-3 rounded-full border border-gray-300 shadow-sm focus:ring-2 focus:ring-c09a58 focus:border-c09a58 transition">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Behavior & Conduct</h3>
+                <p class="mt-2 text-gray-600">No alcohol, no loud talking, personal mobile phone use prohibited on-site.</p>
+            </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Anti-Fraud Policy</h3>
+                <p class="mt-2 text-gray-600">Side deals are forbidden. All payments go through official channels only.</p>
             </div>
         </div>
+    </section>
 
-        <div id="sop-content">
-            <!-- Section: Team & Roles -->
-            <section id="roles" data-section class="py-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Our Team: Roles & Responsibilities</h2>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 searchable-content">
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">Project Manager (PM)</h3>
-                        <p class="mt-2 text-gray-600">The overall leader and main point of contact for the entire event. Responsible for the entire project lifecycle, from initial vendor booking to final event execution and reporting. Coordinates all team members and vendors. The primary problem-solver for any on-site issues. Ensures the entire event adheres to this SOP.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">Meeting Manager (MM)</h3>
-                        <p class="mt-2 text-gray-600">Conducts the pre-wedding meeting with clients upon their arrival in Bali. Responsible for finalizing all event details, preferences, and special requests with the client. Updates the official Wedding Report (WR) file with all final information, which serves as a key document for the PM's execution plan.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">Client Manager (CM) / Personal Butler</h3>
-                        <p class="mt-2 text-gray-600">Provides exceptionally personalized assistance to the couple throughout the wedding day. Acts as the couple's primary point of contact for personal needs, helping to manage their schedule and keep them comfortable and stress-free. For the duration of the event, the CM is assigned as the **Area Manager** for Photography and Videography, ensuring those vendors meet our quality standards.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">Area Manager (AM)</h3>
-                        <p class="mt-2 text-gray-600">A temporary role assigned by the PM for a specific event. An AM is responsible for quality control and smooth execution within a dedicated area (e.g., Catering, Decorations, Entertainment). They do not book vendors but ensure the booked vendors perform according to the SOP.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">Head Manager (HPM) / Development Manager (DM) / Finance Manager (FM)</h3>
-                        <p class="mt-2 text-gray-600">Senior management responsible for high-level oversight. The HPM assigns PMs to projects. The DM approves new vendors. The FM manages all financial matters, including vendor pricing and payments.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <hr class="my-12 border-gray-200">
-
-            <!-- Section: Core Principles -->
-            <section id="principles" data-section class="py-12">
-                 <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Core Principles for Every Wedding</h2>
-                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 searchable-content">
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">1. Venue: Clean & Private</h3>
-                        <p class="mt-2 text-gray-600">The ceremony area and visible surroundings must be completely clean. Team members must politely ask onlookers to move away during the ceremony.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">2. Follow the Rundown</h3>
-                        <p class="mt-2 text-gray-600">The PM and all AMs must follow the event timeline (rundown) exactly. Report any delays to the PM immediately.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">3. Client Arrival</h3>
-                        <p class="mt-2 text-gray-600">The client must not arrive before the time stated in the rundown. Before they arrive, everything must be 100% ready: decorations, team, music, etc.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">4. Vendor Arrival & Payment</h3>
-                        <p class="mt-2 text-gray-600">Vendors must arrive at their appointed time. If late, the PM will not pay them. The vendor must contact the Finance Manager to resolve payment.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">5. Use Appointed Vendors</h3>
-                        <p class="mt-2 text-gray-600">PMs must only book vendors from the official company list. For exceptions, get approval from the Head Manager.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">6. Follow the Client's Order</h3>
-                        <p class="mt-2 text-gray-600">All items and services must exactly match the client’s final order in the contract and Wedding Report (WR).</p>
-                    </div>
-                </div>
-            </section>
-            
-            <hr class="my-12 border-gray-200">
-
-            <!-- Section: Event Lifecycle -->
-            <section id="lifecycle" data-section class="py-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">The Event Lifecycle</h2>
-                 <div class="flex justify-center mb-8">
-                    <div class="flex space-x-2 bg-gray-200 p-1 rounded-full">
-                        <button class="tab active px-4 py-2 rounded-full text-sm font-medium transition" data-tab="booking">Booking & Planning</button>
-                        <button class="tab px-4 py-2 rounded-full text-sm font-medium transition" data-tab="prep">Event Preparation</button>
-                        <button class="tab px-4 py-2 rounded-full text-sm font-medium transition" data-tab="day">On The Day</button>
-                    </div>
-                </div>
-
-                <div id="tab-content" class="searchable-content">
-                    <div class="tab-pane active" id="booking-content">
-                        <div class="grid md:grid-cols-2 gap-8">
-                           <div class="card p-6">
-                                <h3 class="font-bold text-lg text-gray-900">Booking Protocol</h3>
-                                <ol class="mt-2 text-gray-600 list-decimal list-inside space-y-2">
-                                    <li><strong>PM Assignment:</strong> After deposit, HPM assigns a PM.</li>
-                                    <li><strong>Booking via Email:</strong> PM books all vendors via `7agency.bookings@gmail.com`. No personal emails/WhatsApp for bookings.</li>
-                                    <li><strong>Vendor Confirmation:</strong> Vendor must reply to the official email to confirm. This is the official record.</li>
-                                    <li><strong>Final Confirmation:</strong> One month before the event, PM re-confirms all details with all vendors via the official email.</li>
-                                </ol>
-                            </div>
-                            <div class="card p-6">
-                                <h3 class="font-bold text-lg text-gray-900">Making the Rundown (Event Timeline)</h3>
-                                <p class="mt-2 text-gray-600"><strong>Big Weddings:</strong> The responsible PM must create the wedding rundown at least one month before the wedding date. Once created, the PM sends it to the Sales Manager, who will share it with the client.</p>
-                                <p class="mt-2 text-gray-600"><strong>Small Weddings:</strong> The PM must create the rundown after the pre-wedding meeting between the client and the Meeting Manager is complete.</p>
-                            </div>
-                            <div class="card p-6">
-                                <h3 class="font-bold text-lg text-gray-900">Product & Price Knowledge</h3>
-                                <p class="mt-2 text-gray-600">All PMs must know the company's packages. All vendors must be paid according to the official Nett Price List. No PM can approve a higher price without written approval from the FM.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane hidden" id="prep-content">
-                         <div class="grid md:grid-cols-2 gap-8">
-                            <div class="card p-6">
-                                <h3 class="font-bold text-lg text-gray-900">Technical Meetings & Rehearsals</h3>
-                                <p class="mt-2 text-gray-600">A technical meeting with all key vendors is mandatory for large weddings to review the plan. A separate rehearsal is held for the couple to practice the ceremony.</p>
-                            </div>
-                            <div class="card p-6">
-                                <h3 class="font-bold text-lg text-gray-900">Client Updates</h3>
-                                <p class="mt-2 text-gray-600">The Sales Manager (SM) or Meeting Manager (MM) will inform the PM of any changes after meeting with the client. The PM is responsible for updating all relevant vendors immediately.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane hidden" id="day-content">
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div class="card p-6">
-                                <h3 class="font-bold text-lg text-gray-900">Client Briefing</h3>
-                                <p class="mt-2 text-gray-600">When the client arrives, the PM or CM must give a short (3-minute) briefing to explain the walking order and what will happen during the ceremony.</p>
-                            </div>
-                             <div class="card p-6">
-                                <h3 class="font-bold text-lg text-gray-900">Atmosphere & Music</h3>
-                                <p class="mt-2 text-gray-600">Background music is mandatory for all weddings to create a celebratory atmosphere. The music should be playing as the client approaches. A microphone must always be available and used for the ceremony.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <hr class="my-12 border-gray-200">
-
-            <!-- Section: Team & Vendor Standards -->
-            <section id="standards" data-section class="py-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Team & Vendor Standards</h2>
-                <div class="grid md:grid-cols-2 gap-8 searchable-content">
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">Appearance</h3>
-                        <ul class="mt-2 text-gray-600 list-disc list-inside space-y-2">
-                           <li><strong>Uniforms:</strong> All team members must look professional. For big events, the PM will choose one official uniform. For small events, a company t-shirt with dark pants is acceptable.</li>
-                           <li><strong>Vendors:</strong> Must wear their own professional uniform or all-black attire (plain black shirt, black pants, clean closed-toe shoes).</li>
-                           <li><strong>Grooming:</strong> Uniforms must be clean and ironed. Personal hygiene is mandatory.</li>
-                           <li><strong>Shoes:</strong> Clean, closed-toe shoes are required for all staff.</li>
-                           <li><strong>Accessories:</strong> Keep accessories minimal. Only approved hats are permitted.</li>
-                        </ul>
-                    </div>
-                     <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">Attitude & Conduct (Code of Conduct)</h3>
-                         <ul class="mt-2 text-gray-600 list-disc list-inside space-y-2">
-                            <li><strong>Be Professional:</strong> Be friendly, positive, and solution-oriented. Never say "it's not my job."</li>
-                            <li><strong>Be Discreet:</strong> Do not speak loudly. Keep personal bags out of sight. No personal mobile phone use in front of clients or guests.</li>
-                            <li><strong>No Alcohol or Smoking:</strong> Consuming alcohol is strictly forbidden. Smoking is only allowed in designated areas away from the event.</li>
-                            <li><strong>Staff Areas:</strong> All breaks and meals must happen in the designated staff area.</li>
-                            <li><strong>Crew Food Only:</strong> Do not eat any food prepared for clients or guests.</li>
-                        </ul>
-                    </div>
-                    <div class="card p-6 md:col-span-2">
-                        <h3 class="font-bold text-lg text-gray-900">Anti-Fraud Policy</h3>
-                        <ul class="mt-2 text-gray-600 list-disc list-inside space-y-2">
-                            <li><strong>No Side Deals:</strong> All bookings, negotiations, and payments must go through official company channels. Attempting to arrange side deals is strictly forbidden.</li>
-                            <li><strong>Client Payments:</strong> If a client must make an on-site payment, the Finance Dept must first issue an official invoice and assign a PIC to accept the payment. Do not accept direct cash payments.</li>
-                            <li><strong>Consequences:</strong> Violating this policy will result in immediate termination and possible legal action.</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            
-            <hr class="my-12 border-gray-200">
-            
-            <!-- Section: Admin & Contacts -->
-            <section id="admin" data-section class="py-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Administration, Sanctions & Emergency Contacts</h2>
-                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 searchable-content">
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">Vendor Management</h3>
-                        <ul class="mt-2 text-gray-600 list-disc list-inside space-y-2">
-                            <li><strong>New Permanent Vendors:</strong> Must be approved by management via a formal proposal.</li>
-                            <li><strong>One-Time Vendors:</strong> Require pre-approval from the HPM, with price approval from the FM. The PM is fully responsible for their quality and conduct.</li>
-                             <li><strong>No "In-House" Vendors:</strong> To avoid conflicts of interest, company team members are not permitted to act as vendors for any company events.</li>
-                        </ul>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">Sanctions & Penalties</h3>
-                        <p class="mt-2 text-gray-600"><strong>For Internal Team:</strong> A 3-strike system applies. 1st Violation: Written Warning. 2nd Violation: Loss of payment for the event. 3rd Violation: Formal review with management, which may lead to termination.</p>
-                        <p class="mt-2 text-gray-600"><strong>For Vendors:</strong> 1st Violation: Written Warning. 2nd Violation: The vendor will not be paid for the event and must meet with the Head Manager to discuss the issue. Future work is not guaranteed.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg text-gray-900">Emergency Contacts</h3>
-                        <p class="mt-2 text-gray-600">For urgent matters that cannot be resolved by the on-site PM, contact the appropriate department.</p>
-                        <ul class="mt-4 space-y-2">
-                            <li>
-                                <strong class="block">Head Manager:</strong>
-                                <a href="mailto:head@7.agency" class="text-c09a58 hover:underline">head@7.agency</a>
-                            </li>
-                            <li>
-                                <strong class="block">Finance Department:</strong>
-                                <a href="mailto:finance@thesevenagency.com" class="text-c09a58 hover:underline">finance@thesevenagency.com</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+    <section id="admin" class="section-block" data-section>
+        <h2 class="section-title">Admin & Emergency Contacts</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Vendor Management</h3>
+                <p class="mt-2 text-gray-600">All new vendors require formal approval; team members cannot act as vendors.</p>
+            </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Sanctions</h3>
+                <p class="mt-2 text-gray-600">3-strike system for internal staff; vendor violations affect future collaboration.</p>
+            </div>
+            <div class="card p-6">
+                <h3 class="font-bold text-lg">Emergency Contacts</h3>
+                <p class="mt-2 text-gray-600">Urgent issues must be escalated to management. Head: head@7.agency, Finance: finance@thesevenagency.com</p>
+            </div>
         </div>
-    </main>
+    </section>
 
-    <footer class="bg-white mt-20 border-t">
-        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
-            <p>&copy; 2025 The Seven Agency. All rights reserved. SOP Version 1.0</p>
-        </div>
-    </footer>
+</main>
+
+<footer class="bg-white mt-20 border-t">
+    <div class="container mx-auto py-6 px-4 text-center text-gray-500">
+        <p>&copy; 2025 The Seven Agency. All rights reserved. SOP Version 1.0</p>
+    </div>
+</footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const navLinks = document.querySelectorAll('nav a, #mobile-menu a');
-    const searchInput = document.getElementById('searchInput');
-    const sopContent = document.getElementById('sop-content');
-    const searchableContents = sopContent.querySelectorAll('.searchable-content');
-    const tabs = document.querySelectorAll('.tab');
-    const tabPanes = document.querySelectorAll('.tab-pane');
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
 
-    mobileMenuButton.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-            if (!mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.add('hidden');
-            }
-        });
-    });
-
-    searchInput.addEventListener('keyup', function () {
-        const query = searchInput.value.toLowerCase().trim();
-
-        searchableContents.forEach(contentBlock => {
-            const cards = contentBlock.querySelectorAll('.card');
-            let blockHasResults = false;
-            
-            cards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                if (text.includes(query)) {
-                    card.style.display = '';
-                    blockHasResults = true;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-            
-            const section = contentBlock.closest('section');
-            if(section) {
-                const header = section.querySelector('h2');
-                if (query === '') {
-                    section.style.display = '';
-                    if (header) header.style.display = '';
-                } else {
-                     if (blockHasResults) {
-                        section.style.display = '';
-                        if (header) header.style.display = '';
-                     } else {
-                        section.style.display = 'none';
-                     }
-                }
-            }
-        });
-        
-        if (query === '') {
-            searchableContents.forEach(contentBlock => {
-                const cards = contentBlock.querySelectorAll('.card');
-                cards.forEach(card => card.style.display = '');
-                const section = contentBlock.closest('section');
-                if (section) section.style.display = '';
-            });
-        }
-    });
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            
-            const target = tab.getAttribute('data-tab');
-            
-            tabPanes.forEach(pane => {
-                if (pane.id === `${target}-content`) {
-                    pane.classList.remove('hidden');
-                    pane.classList.add('active');
-                } else {
-                    pane.classList.add('hidden');
-                    pane.classList.remove('active');
-                }
-            });
-        });
+        const target = tab.getAttribute('data-tab');
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+        document.getElementById(target).classList.remove('hidden');
     });
 });
 </script>
+
 </body>
 </html>
