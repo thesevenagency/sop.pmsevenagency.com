@@ -61,109 +61,107 @@
             from {opacity: 0; transform: translateY(20px);}
             to {opacity: 1; transform: translateY(0);}
         }
+        @media (max-width: 768px) {
+            #mobile-menu a:hover {
+                background-color: #f3f4f6;
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
-    <header class="bg-white/80 backdrop-blur-lg shadow-sm fixed top-0 left-0 right-0 z-50">
-        <div class="container mx-auto px-4 flex items-center justify-between h-16">
-            <h1 class="text-xl font-bold text-gray-800">The Seven Agency SOP</h1>
-            <nav class="hidden md:flex space-x-6">
-                <a href="#roles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Team & Roles</a>
-                <a href="#principles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Core Principles</a>
-                <a href="#lifecycle" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Event Lifecycle</a>
-                <a href="#standards" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Vendor Standards</a>
-                <a href="#admin" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Admin & Contacts</a>
-            </nav>
-            <button id="menu-btn" class="md:hidden focus:outline-none">
-                <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                </svg>
-            </button>
+<header class="bg-white/80 backdrop-blur-lg shadow-sm fixed top-0 left-0 right-0 z-50">
+    <div class="container mx-auto px-4 flex items-center justify-between h-16">
+        <h1 class="text-xl font-bold text-gray-800">The Seven Agency SOP</h1>
+        <nav class="hidden md:flex space-x-6">
+            <a href="#roles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Team & Roles</a>
+            <a href="#principles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Core Principles</a>
+            <a href="#lifecycle" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Event Lifecycle</a>
+            <a href="#standards" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Vendor Standards</a>
+            <a href="#admin" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Admin & Contacts</a>
+        </nav>
+        <button id="menu-btn" class="md:hidden focus:outline-none">
+            <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+        <a href="#roles" class="block px-4 py-2 border-b text-gray-700">Team & Roles</a>
+        <a href="#principles" class="block px-4 py-2 border-b text-gray-700">Core Principles</a>
+        <a href="#lifecycle" class="block px-4 py-2 border-b text-gray-700">Event Lifecycle</a>
+        <a href="#standards" class="block px-4 py-2 border-b text-gray-700">Vendor Standards</a>
+        <a href="#admin" class="block px-4 py-2 border-b text-gray-700">Admin & Contacts</a>
+    </div>
+</header>
+<main class="container mx-auto px-4 pt-24">
+    <section class="text-center py-12 fade-in">
+        <h2 class="text-4xl font-bold text-gray-900">Interactive SOP for Events</h2>
+        <p class="mt-4 max-w-2xl mx-auto text-gray-600">Search rules, view responsibilities, and understand standards — all in one place.</p>
+    </section>
+    <div class="search-container">
+        <div class="max-w-xl mx-auto relative">
+            <input id="searchInput" type="text" placeholder="Search topics or rules..." class="w-full pl-4 pr-4 py-3 rounded-full border border-gray-300 focus:ring-2 focus:ring-c09a58">
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
-            <a href="#roles" class="block px-4 py-2 border-b text-gray-700">Team & Roles</a>
-            <a href="#principles" class="block px-4 py-2 border-b text-gray-700">Core Principles</a>
-            <a href="#lifecycle" class="block px-4 py-2 border-b text-gray-700">Event Lifecycle</a>
-            <a href="#standards" class="block px-4 py-2 border-b text-gray-700">Vendor Standards</a>
-            <a href="#admin" class="block px-4 py-2 border-b text-gray-700">Admin & Contacts</a>
-        </div>
-    </header>
-
-    <main class="container mx-auto px-4 pt-24">
-        <section class="text-center py-12 fade-in">
-            <h2 class="text-4xl font-bold text-gray-900">Interactive SOP for Events</h2>
-            <p class="mt-4 max-w-2xl mx-auto text-gray-600">Search rules, view responsibilities, and understand standards — all in one place.</p>
-        </section>
-
-        <div class="search-container">
-            <div class="max-w-xl mx-auto relative">
-                <input id="searchInput" type="text" placeholder="Search topics or rules..." class="w-full pl-4 pr-4 py-3 rounded-full border border-gray-300 focus:ring-2 focus:ring-c09a58">
+    </div>
+    <div id="content" class="space-y-16 py-12">
+        <section id="roles" data-section class="fade-in">
+            <h3 class="text-2xl font-bold mb-6 text-center">Team & Roles</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="card p-6">Project Manager (PM): Full responsibility for event execution, from booking to delivery.</div>
+                <div class="card p-6">Meeting Manager (MM): Organizes pre-wedding meetings, communicates logistics with client.</div>
+                <div class="card p-6">Client Manager (Butler): Supports couple throughout the day, assists photography team.</div>
+                <div class="card p-6">Operations Coordinator: Handles setup, technical checks, vendor arrival.</div>
             </div>
-        </div>
-
-        <div id="content" class="space-y-16 py-12">
-            <section id="roles" data-section class="fade-in">
-                <h3 class="text-2xl font-bold mb-6 text-center">Team & Roles</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="card p-6">Project Manager (PM): Leads full event process.</div>
-                    <div class="card p-6">Meeting Manager (MM): Manages pre-wedding client meetings.</div>
-                    <div class="card p-6">Client Manager / Butler: Couple's personal support & Photography oversight.</div>
-                </div>
-            </section>
-
-            <section id="principles" data-section class="fade-in">
-                <h3 class="text-2xl font-bold mb-6 text-center">Core Principles</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="card p-6">Venue must be clean & private.</div>
-                    <div class="card p-6">Follow the event rundown strictly.</div>
-                    <div class="card p-6">Client arrives only after full readiness.</div>
-                </div>
-            </section>
-
-            <section id="lifecycle" data-section class="fade-in">
-                <h3 class="text-2xl font-bold mb-6 text-center">Event Lifecycle</h3>
-                <div class="flex justify-center mb-4">
-                    <button class="tab active px-4 py-2 rounded-full bg-gray-300 mx-2" data-tab="plan">Planning</button>
-                    <button class="tab px-4 py-2 rounded-full bg-gray-200 mx-2" data-tab="prep">Preparation</button>
-                    <button class="tab px-4 py-2 rounded-full bg-gray-200 mx-2" data-tab="day">On The Day</button>
-                </div>
-                <div id="tab-content" class="grid md:grid-cols-2 gap-6">
-                    <div class="card p-6">PM assigned after deposit. Vendor bookings via company email.</div>
-                    <div class="card p-6">Create event rundown, confirm vendors one month prior.</div>
-                </div>
-            </section>
-
-            <section id="standards" data-section class="fade-in">
-                <h3 class="text-2xl font-bold mb-6 text-center">Vendor & Team Standards</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="card p-6">Professional uniforms mandatory.</div>
-                    <div class="card p-6">Be discreet, no visible personal phones.</div>
-                    <div class="card p-6">Zero tolerance for side deals or fraud.</div>
-                </div>
-            </section>
-
-            <section id="admin" data-section class="fade-in">
-                <h3 class="text-2xl font-bold mb-6 text-center">Administration & Contacts</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="card p-6">New vendors require management approval.</div>
-                    <div class="card p-6">Emergency? Contact head@7.agency.</div>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <footer class="mt-20 text-center text-gray-500 text-sm py-6">
-        &copy; 2025 The Seven Agency. SOP v1.0
-    </footer>
-
+        </section>
+        <section id="principles" data-section class="fade-in">
+            <h3 class="text-2xl font-bold mb-6 text-center">Core Principles</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="card p-6">Venues must be clean, private, and properly prepared before client arrival.</div>
+                <div class="card p-6">All team members follow the official event rundown strictly.</div>
+                <div class="card p-6">Clients only arrive after management confirms full readiness.</div>
+                <div class="card p-6">Communication with the couple is always professional and solution-oriented.</div>
+            </div>
+        </section>
+        <section id="lifecycle" data-section class="fade-in">
+            <h3 class="text-2xl font-bold mb-6 text-center">Event Lifecycle</h3>
+            <div class="flex justify-center mb-4">
+                <button class="tab active px-4 py-2 rounded-full bg-gray-300 mx-2" data-tab="plan">Planning</button>
+                <button class="tab px-4 py-2 rounded-full bg-gray-200 mx-2" data-tab="prep">Preparation</button>
+                <button class="tab px-4 py-2 rounded-full bg-gray-200 mx-2" data-tab="day">On The Day</button>
+            </div>
+            <div id="tab-content" class="grid md:grid-cols-2 gap-6">
+                <div class="card p-6">PM assigned after deposit payment. All vendor bookings via official email.</div>
+                <div class="card p-6">Event rundown draft created and reviewed one month prior.</div>
+            </div>
+        </section>
+        <section id="standards" data-section class="fade-in">
+            <h3 class="text-2xl font-bold mb-6 text-center">Vendor & Team Standards</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="card p-6">Professional uniforms mandatory during event hours.</div>
+                <div class="card p-6">Discretion required — no personal phones visible.</div>
+                <div class="card p-6">Zero tolerance for private deals, bribery, or fraud.</div>
+                <div class="card p-6">All vendors must pass quality checks; new vendors need approval.</div>
+            </div>
+        </section>
+        <section id="admin" data-section class="fade-in">
+            <h3 class="text-2xl font-bold mb-6 text-center">Administration & Contacts</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="card p-6">New vendor applications go through management verification.</div>
+                <div class="card p-6">In emergencies, contact head@7.agency or senior management directly.</div>
+                <div class="card p-6">All SOP updates announced via internal newsletter.</div>
+            </div>
+        </section>
+    </div>
+</main>
+<footer class="mt-20 text-center text-gray-500 text-sm py-6">
+    &copy; 2025 The Seven Agency. SOP v1.0
+</footer>
 <script>
 const menuBtn = document.getElementById('menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
 const tabs = document.querySelectorAll('.tab');
 const tabContent = document.getElementById('tab-content');
-
 menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-
 document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', e => {
         e.preventDefault();
@@ -171,34 +169,29 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         mobileMenu.classList.add('hidden');
     });
 });
-
 tabs.forEach(tab => {
     tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active', 'bg-gray-300'));
         tab.classList.add('active', 'bg-gray-300');
         tabContent.innerHTML = '';
-
         if (tab.dataset.tab === 'plan') {
-            tabContent.innerHTML = '<div class="card p-6">PM assigned after deposit. Vendor bookings via company email.</div><div class="card p-6">Create event rundown, confirm vendors one month prior.</div>';
+            tabContent.innerHTML = '<div class="card p-6">PM assigned after deposit payment. All vendor bookings via official email.</div><div class="card p-6">Event rundown draft created and reviewed one month prior.</div>';
         }
         if (tab.dataset.tab === 'prep') {
-            tabContent.innerHTML = '<div class="card p-6">Technical meetings & rehearsals required.</div><div class="card p-6">Client updates handled by Sales or Meeting Manager.</div>';
+            tabContent.innerHTML = '<div class="card p-6">Technical meetings, rehearsals mandatory one week before event.</div><div class="card p-6">Sales or Meeting Manager provides final updates to client.</div>';
         }
         if (tab.dataset.tab === 'day') {
-            tabContent.innerHTML = '<div class="card p-6">Brief the client on ceremony procedure.</div><div class="card p-6">Background music & atmosphere mandatory.</div>';
+            tabContent.innerHTML = '<div class="card p-6">Client briefed on ceremony sequence upon arrival.</div><div class="card p-6">Background music and atmosphere setup completed before guests enter.</div>';
         }
         fadeInCards();
     });
 });
-
 document.addEventListener('DOMContentLoaded', fadeInCards);
-
 function fadeInCards() {
     document.querySelectorAll('.card').forEach((card, i) => {
         setTimeout(() => card.classList.add('show'), i * 100);
     });
 }
-
 document.getElementById('searchInput').addEventListener('keyup', e => {
     const q = e.target.value.toLowerCase();
     document.querySelectorAll('[data-section]').forEach(section => {
