@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Seven Agency - Interactive SOP</title>
+    <title>The Seven Agency SOP</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -23,14 +25,13 @@
             background-color: #fff;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
             border: 1px solid #e5e7eb;
-            transform: translateY(20px);
             opacity: 0;
-            transition: transform 0.5s ease, opacity 0.5s ease;
         }
-        .card.visible {
-            transform: translateY(0);
+        .card.show {
             opacity: 1;
+            transform: translateY(0);
         }
         .search-container {
             position: sticky;
@@ -50,102 +51,160 @@
         [data-section] {
             scroll-margin-top: 200px;
         }
-        .mobile-nav {
-            transition: max-height 0.4s ease;
-            overflow: hidden;
-            max-height: 0;
+        .searchable-content {
+            padding: 1rem;
         }
-        .mobile-nav.open {
-            max-height: 500px;
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
         }
     </style>
 </head>
 <body class="antialiased">
-
-<header class="bg-white/80 backdrop-blur-lg shadow-sm fixed top-0 left-0 right-0 z-50">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-4 flex items-center justify-between h-16">
             <h1 class="text-xl font-bold text-gray-800">The Seven Agency SOP</h1>
-            <nav class="hidden md:flex space-x-8">
+            <nav class="hidden md:flex space-x-6">
                 <a href="#roles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Team & Roles</a>
                 <a href="#principles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Core Principles</a>
                 <a href="#lifecycle" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Event Lifecycle</a>
                 <a href="#standards" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Vendor Standards</a>
                 <a href="#admin" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Admin & Contacts</a>
             </nav>
-            <button id="burger" class="md:hidden text-gray-800">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+            <button id="menu-btn" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
             </button>
         </div>
-        <div id="mobileMenu" class="mobile-nav md:hidden bg-white border-t"></div>
-    </div>
-</header>
-
-<main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-24">
-    <section class="text-center py-16">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Interactive SOP</h1>
-    </section>
-    <div class="search-container">
-        <div class="relative max-w-2xl mx-auto">
-            <input type="text" id="searchInput" placeholder="Search..." class="w-full pl-5 pr-4 py-3 rounded-full border border-gray-300 shadow-sm focus:ring-2 focus:ring-c09a58 focus:border-c09a58">
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <a href="#roles" class="block px-4 py-2 border-b text-gray-700">Team & Roles</a>
+            <a href="#principles" class="block px-4 py-2 border-b text-gray-700">Core Principles</a>
+            <a href="#lifecycle" class="block px-4 py-2 border-b text-gray-700">Event Lifecycle</a>
+            <a href="#standards" class="block px-4 py-2 border-b text-gray-700">Vendor Standards</a>
+            <a href="#admin" class="block px-4 py-2 border-b text-gray-700">Admin & Contacts</a>
         </div>
-    </div>
-    <div id="sop-content">
-        <!-- Content Sections Inserted Here -->
-    </div>
-</main>
+    </header>
 
-<footer class="bg-white mt-20 border-t">
-    <div class="container mx-auto py-6 text-center text-gray-500">
-        &copy; 2025 The Seven Agency. SOP Version 1.0
-    </div>
-</footer>
+    <main class="container mx-auto px-4 pt-24">
+        <section class="text-center py-12 fade-in">
+            <h2 class="text-4xl font-bold text-gray-900">Interactive SOP for Events</h2>
+            <p class="mt-4 max-w-2xl mx-auto text-gray-600">Search rules, view responsibilities, and understand standards — all in one place.</p>
+        </section>
+
+        <div class="search-container">
+            <div class="max-w-xl mx-auto relative">
+                <input id="searchInput" type="text" placeholder="Search topics or rules..." class="w-full pl-4 pr-4 py-3 rounded-full border border-gray-300 focus:ring-2 focus:ring-c09a58">
+            </div>
+        </div>
+
+        <div id="content" class="space-y-16 py-12">
+            <section id="roles" data-section class="fade-in">
+                <h3 class="text-2xl font-bold mb-6 text-center">Team & Roles</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card p-6">Project Manager (PM): Leads full event process.</div>
+                    <div class="card p-6">Meeting Manager (MM): Manages pre-wedding client meetings.</div>
+                    <div class="card p-6">Client Manager / Butler: Couple's personal support & Photography oversight.</div>
+                </div>
+            </section>
+
+            <section id="principles" data-section class="fade-in">
+                <h3 class="text-2xl font-bold mb-6 text-center">Core Principles</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card p-6">Venue must be clean & private.</div>
+                    <div class="card p-6">Follow the event rundown strictly.</div>
+                    <div class="card p-6">Client arrives only after full readiness.</div>
+                </div>
+            </section>
+
+            <section id="lifecycle" data-section class="fade-in">
+                <h3 class="text-2xl font-bold mb-6 text-center">Event Lifecycle</h3>
+                <div class="flex justify-center mb-4">
+                    <button class="tab active px-4 py-2 rounded-full bg-gray-300 mx-2" data-tab="plan">Planning</button>
+                    <button class="tab px-4 py-2 rounded-full bg-gray-200 mx-2" data-tab="prep">Preparation</button>
+                    <button class="tab px-4 py-2 rounded-full bg-gray-200 mx-2" data-tab="day">On The Day</button>
+                </div>
+                <div id="tab-content" class="grid md:grid-cols-2 gap-6">
+                    <div class="card p-6">PM assigned after deposit. Vendor bookings via company email.</div>
+                    <div class="card p-6">Create event rundown, confirm vendors one month prior.</div>
+                </div>
+            </section>
+
+            <section id="standards" data-section class="fade-in">
+                <h3 class="text-2xl font-bold mb-6 text-center">Vendor & Team Standards</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card p-6">Professional uniforms mandatory.</div>
+                    <div class="card p-6">Be discreet, no visible personal phones.</div>
+                    <div class="card p-6">Zero tolerance for side deals or fraud.</div>
+                </div>
+            </section>
+
+            <section id="admin" data-section class="fade-in">
+                <h3 class="text-2xl font-bold mb-6 text-center">Administration & Contacts</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card p-6">New vendors require management approval.</div>
+                    <div class="card p-6">Emergency? Contact head@7.agency.</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="mt-20 text-center text-gray-500 text-sm py-6">
+        &copy; 2025 The Seven Agency. SOP v1.0
+    </footer>
 
 <script>
-const burger = document.getElementById('burger');
-const mobileMenu = document.getElementById('mobileMenu');
-const navLinks = document.querySelectorAll('nav a');
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const tabs = document.querySelectorAll('.tab');
+const tabContent = document.getElementById('tab-content');
 
-burger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-    mobileMenu.innerHTML = mobileMenu.classList.contains('open') ? `
-        <a href="#roles" class="block px-4 py-2">Team & Roles</a>
-        <a href="#principles" class="block px-4 py-2">Core Principles</a>
-        <a href="#lifecycle" class="block px-4 py-2">Event Lifecycle</a>
-        <a href="#standards" class="block px-4 py-2">Vendor Standards</a>
-        <a href="#admin" class="block px-4 py-2">Admin & Contacts</a>
-    ` : '';
-});
+menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
 document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', e => {
         e.preventDefault();
-        document.querySelector(link.getAttribute('href')).scrollIntoView({behavior: 'smooth'});
-        mobileMenu.classList.remove('open');
+        document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        mobileMenu.classList.add('hidden');
     });
 });
 
-const searchInput = document.getElementById('searchInput');
-searchInput.addEventListener('input', () => {
-    const query = searchInput.value.toLowerCase();
-    document.querySelectorAll('.card').forEach(card => {
-        card.style.display = card.textContent.toLowerCase().includes(query) ? '' : 'none';
-    });
-});
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active', 'bg-gray-300'));
+        tab.classList.add('active', 'bg-gray-300');
+        tabContent.innerHTML = '';
 
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
+        if (tab.dataset.tab === 'plan') {
+            tabContent.innerHTML = '<div class="card p-6">PM assigned after deposit. Vendor bookings via company email.</div><div class="card p-6">Create event rundown, confirm vendors one month prior.</div>';
         }
+        if (tab.dataset.tab === 'prep') {
+            tabContent.innerHTML = '<div class="card p-6">Technical meetings & rehearsals required.</div><div class="card p-6">Client updates handled by Sales or Meeting Manager.</div>';
+        }
+        if (tab.dataset.tab === 'day') {
+            tabContent.innerHTML = '<div class="card p-6">Brief the client on ceremony procedure.</div><div class="card p-6">Background music & atmosphere mandatory.</div>';
+        }
+        fadeInCards();
     });
-}, {threshold: 0.1});
+});
 
-document.querySelectorAll('.card').forEach(card => observer.observe(card));
+document.addEventListener('DOMContentLoaded', fadeInCards);
+
+function fadeInCards() {
+    document.querySelectorAll('.card').forEach((card, i) => {
+        setTimeout(() => card.classList.add('show'), i * 100);
+    });
+}
+
+document.getElementById('searchInput').addEventListener('keyup', e => {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll('[data-section]').forEach(section => {
+        section.style.display = section.innerText.toLowerCase().includes(q) ? '' : 'none';
+    });
+});
 </script>
-
 </body>
 </html>
