@@ -1,254 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Seven Agency - Interactive SOP</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f8f7f4;
-    color: #333;
-}
-.nav-link {
-    transition: color 0.3s ease, border-bottom-color 0.3s ease;
-}
-.nav-link:hover {
-    color: #c09a58;
-    border-bottom-color: #c09a58;
-}
-.card {
-    background-color: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #e5e7eb;
-}
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.1);
-}
-.section-block {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    padding: 2rem;
-    margin-bottom: 3rem;
-}
-.tab.active {
-    background-color: #3a3a3a;
-    color: #fff;
-}
-.tab:not(.active):hover {
-    background-color: #e5e7eb;
-}
-[data-section] {
-    scroll-margin-top: 200px;
-}
-h1, h2, h3 {
-    color: #1f2937;
-}
-.section-title {
-    font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #1f2937;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Seven Agency - Interactive SOP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f4;
+            color: #333;
+        }
+        .nav-link {
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #c09a58;
+            border-bottom-color: #c09a58;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        .card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .search-container {
+            position: sticky;
+            top: 72px;
+            z-index: 40;
+            background: linear-gradient(to bottom, #f8f7f4 85%, transparent 100%);
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+        .tab.active {
+            background-color: #3a3a3a;
+            color: #fff;
+        }
+        .tab:not(.active):hover {
+            background-color: #e5e7eb;
+        }
+        [data-section] {
+            scroll-margin-top: 200px;
+        }
+        .mobile-nav {
+            transition: max-height 0.4s ease;
+            overflow: hidden;
+            max-height: 0;
+        }
+        .mobile-nav.open {
+            max-height: 500px;
+        }
+    </style>
 </head>
 <body class="antialiased">
 
 <header class="bg-white/80 backdrop-blur-lg shadow-sm fixed top-0 left-0 right-0 z-50">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-18">
+        <div class="flex items-center justify-between h-16">
             <h1 class="text-xl font-bold text-gray-800">The Seven Agency SOP</h1>
-            <nav class="hidden md:flex items-center space-x-8">
+            <nav class="hidden md:flex space-x-8">
                 <a href="#roles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Team & Roles</a>
                 <a href="#principles" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Core Principles</a>
                 <a href="#lifecycle" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Event Lifecycle</a>
                 <a href="#standards" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Vendor Standards</a>
                 <a href="#admin" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Admin & Contacts</a>
             </nav>
+            <button id="burger" class="md:hidden text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                </svg>
+            </button>
         </div>
+        <div id="mobileMenu" class="mobile-nav md:hidden bg-white border-t"></div>
     </div>
 </header>
 
-<main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-28">
-
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-24">
     <section class="text-center py-16">
-        <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">Interactive Standard Operating Procedure</h2>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Interactive SOP</h1>
     </section>
-
-    <section class="section-block">
-        <h2 class="section-title">Important Notice</h2>
-        <p class="text-gray-700 mb-4">This SOP is mandatory for all team members and vendors. Please read carefully and follow every section to ensure excellence in our events.</p>
-    </section>
-
-    <section id="roles" class="section-block" data-section>
-        <h2 class="section-title">Team & Roles</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Project Manager (PM)</h3>
-                <p class="mt-2 text-gray-600">Leads the project lifecycle from booking to final execution, coordinates all team and vendors.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Meeting Manager (MM)</h3>
-                <p class="mt-2 text-gray-600">Conducts pre-wedding client meetings, finalizes details, updates the Wedding Report.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Client Manager (CM)</h3>
-                <p class="mt-2 text-gray-600">Assists the couple during the event, ensures Photography & Videography meet standards.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Area Manager (AM)</h3>
-                <p class="mt-2 text-gray-600">Responsible for specific event zones, ensuring vendor performance and quality standards.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Head Manager / Finance / Development</h3>
-                <p class="mt-2 text-gray-600">Oversees management, finance, and vendor approval processes.</p>
-            </div>
+    <div class="search-container">
+        <div class="relative max-w-2xl mx-auto">
+            <input type="text" id="searchInput" placeholder="Search..." class="w-full pl-5 pr-4 py-3 rounded-full border border-gray-300 shadow-sm focus:ring-2 focus:ring-c09a58 focus:border-c09a58">
         </div>
-    </section>
-
-    <section id="principles" class="section-block" data-section>
-        <h2 class="section-title">Core Principles</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Venue Cleanliness</h3>
-                <p class="mt-2 text-gray-600">Ceremony areas must be spotless, politely ask bystanders to move away during ceremonies.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Follow the Rundown</h3>
-                <p class="mt-2 text-gray-600">Strict adherence to the event timeline is required, report delays immediately.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Client Arrival</h3>
-                <p class="mt-2 text-gray-600">Client must arrive only when all preparations are 100% complete.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Vendor Punctuality</h3>
-                <p class="mt-2 text-gray-600">Vendors must arrive on time, otherwise, payment is withheld.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Approved Vendors Only</h3>
-                <p class="mt-2 text-gray-600">Only officially listed vendors may be used unless approved by management.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Respect Client Orders</h3>
-                <p class="mt-2 text-gray-600">All services must match exactly what was ordered and confirmed in writing.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="lifecycle" class="section-block" data-section>
-        <h2 class="section-title">Event Lifecycle</h2>
-        <div class="flex justify-center mb-8">
-            <div class="flex space-x-2 bg-gray-200 p-1 rounded-full">
-                <button class="tab active px-4 py-2 rounded-full text-sm font-medium transition" data-tab="booking">Booking</button>
-                <button class="tab px-4 py-2 rounded-full text-sm font-medium transition" data-tab="prep">Preparation</button>
-                <button class="tab px-4 py-2 rounded-full text-sm font-medium transition" data-tab="day">Event Day</button>
-            </div>
-        </div>
-        <div>
-            <div class="tab-content" id="booking">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg">Vendor Booking</h3>
-                        <p class="mt-2 text-gray-600">All bookings via official company email only. Confirmation is mandatory.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg">Rundown Preparation</h3>
-                        <p class="mt-2 text-gray-600">Timeline must be finalized well before the wedding, depending on size.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-content hidden" id="prep">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg">Technical Meetings</h3>
-                        <p class="mt-2 text-gray-600">Mandatory pre-event meetings for key vendors, rehearsals for the couple.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg">Client Updates</h3>
-                        <p class="mt-2 text-gray-600">All last-minute client changes must be communicated to vendors promptly.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-content hidden" id="day">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg">Client Briefing</h3>
-                        <p class="mt-2 text-gray-600">Provide a short, clear briefing to the couple upon arrival.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="font-bold text-lg">Atmosphere & Music</h3>
-                        <p class="mt-2 text-gray-600">Music must be played during guest arrival; microphones ready for ceremony.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="standards" class="section-block" data-section>
-        <h2 class="section-title">Vendor & Team Standards</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Appearance</h3>
-                <p class="mt-2 text-gray-600">Professional uniform required for all staff; vendors must wear black attire.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Behavior & Conduct</h3>
-                <p class="mt-2 text-gray-600">No alcohol, no loud talking, personal mobile phone use prohibited on-site.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Anti-Fraud Policy</h3>
-                <p class="mt-2 text-gray-600">Side deals are forbidden. All payments go through official channels only.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="admin" class="section-block" data-section>
-        <h2 class="section-title">Admin & Emergency Contacts</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Vendor Management</h3>
-                <p class="mt-2 text-gray-600">All new vendors require formal approval; team members cannot act as vendors.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Sanctions</h3>
-                <p class="mt-2 text-gray-600">3-strike system for internal staff; vendor violations affect future collaboration.</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="font-bold text-lg">Emergency Contacts</h3>
-                <p class="mt-2 text-gray-600">Urgent issues must be escalated to management. Head: head@7.agency, Finance: finance@thesevenagency.com</p>
-            </div>
-        </div>
-    </section>
-
+    </div>
+    <div id="sop-content">
+        <!-- Content Sections Inserted Here -->
+    </div>
 </main>
 
 <footer class="bg-white mt-20 border-t">
-    <div class="container mx-auto py-6 px-4 text-center text-gray-500">
-        <p>&copy; 2025 The Seven Agency. All rights reserved. SOP Version 1.0</p>
+    <div class="container mx-auto py-6 text-center text-gray-500">
+        &copy; 2025 The Seven Agency. SOP Version 1.0
     </div>
 </footer>
 
 <script>
-document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+const navLinks = document.querySelectorAll('nav a');
 
-        const target = tab.getAttribute('data-tab');
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-        document.getElementById(target).classList.remove('hidden');
+burger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    mobileMenu.innerHTML = mobileMenu.classList.contains('open') ? `
+        <a href="#roles" class="block px-4 py-2">Team & Roles</a>
+        <a href="#principles" class="block px-4 py-2">Core Principles</a>
+        <a href="#lifecycle" class="block px-4 py-2">Event Lifecycle</a>
+        <a href="#standards" class="block px-4 py-2">Vendor Standards</a>
+        <a href="#admin" class="block px-4 py-2">Admin & Contacts</a>
+    ` : '';
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(link.getAttribute('href')).scrollIntoView({behavior: 'smooth'});
+        mobileMenu.classList.remove('open');
     });
 });
+
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase();
+    document.querySelectorAll('.card').forEach(card => {
+        card.style.display = card.textContent.toLowerCase().includes(query) ? '' : 'none';
+    });
+});
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+        }
+    });
+}, {threshold: 0.1});
+
+document.querySelectorAll('.card').forEach(card => observer.observe(card));
 </script>
 
 </body>
