@@ -80,7 +80,7 @@
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center">
                     <img src="https://placehold.co/40x40/6366f1/ffffff?text=7A" alt="7.agency Logo" class="h-8 w-8 mr-2 rounded-md">
-                    <span class="font-bold text-lg" data-lang-key="nav.title">7.agency SOP</span>
+                    <span class="font-bold text-lg" data-lang-key="nav.title"></span>
                 </div>
                 <button id="close-sidebar-btn" class="md:hidden text-gray-500 hover:text-gray-800">
                      <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -103,7 +103,7 @@
                  <button id="lang-switcher" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold py-2 px-4 rounded-md text-sm transition duration-150 ease-in-out flex items-center justify-center">
                     <img id="flag-en" src="https://placehold.co/20x15/f0f0f0/000?text=EN" alt="English Flag" class="h-4 w-auto mr-2 rounded-sm">
                     <img id="flag-id" src="https://placehold.co/20x15/f0f0f0/000?text=ID" alt="Indonesian Flag" class="h-4 w-auto mr-2 rounded-sm hidden">
-                    <span id="lang-text" data-lang-key="nav.langToggle">English / Bahasa</span>
+                    <span id="lang-text" data-lang-key="nav.langToggle"></span>
                 </button>
             </div>
         </aside>
@@ -114,7 +114,7 @@
             <header class="md:hidden bg-white shadow-md p-4 flex justify-between items-center">
                  <div class="flex items-center">
                     <img src="https://placehold.co/40x40/6366f1/ffffff?text=7A" alt="7.agency Logo" class="h-8 w-8 mr-2 rounded-md">
-                    <span class="font-bold text-lg" data-lang-key="nav.title">7.agency SOP</span>
+                    <span class="font-bold text-lg" data-lang-key="nav.title"></span>
                 </div>
                 <button id="open-sidebar-btn" class="text-gray-500 hover:text-gray-800">
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
@@ -133,7 +133,7 @@
     <!-- Templates for Pages -->
     <template id="template-home">
         <div class="page">
-            <h1 class="text-3xl font-extrabold text-slate-800 mb-6 uppercase tracking-wide" data-lang-key="home.title">Knowledge Center</h1>
+            <h1 class="text-3xl font-extrabold text-slate-800 mb-6 uppercase tracking-wide" data-lang-key="home.title"></h1>
             <div id="home-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Cards will be injected by JS -->
             </div>
@@ -150,16 +150,15 @@
     <template id="template-login">
         <div class="page max-w-md mx-auto mt-10">
             <div class="bg-white p-8 rounded-lg shadow-md">
-                <h1 class="text-2xl font-bold text-center text-slate-800 mb-6" data-lang-key="login.title">Team Hub Login</h1>
+                <h1 class="text-2xl font-bold text-center text-slate-800 mb-6" data-lang-key="login.title"></h1>
                 <form id="login-form">
                     <div class="mb-4">
-                        <label for="password" class="block text-sm font-medium text-slate-700" data-lang-key="login.passwordLabel">Password</label>
+                        <label for="password" class="block text-sm font-medium text-slate-700" data-lang-key="login.passwordLabel"></label>
                         <input type="password" id="password" name="password" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm">
                     </div>
-                    <p id="login-error" class="text-red-500 text-sm mb-4 hidden" data-lang-key="login.error">Invalid password. Please try again.</p>
+                    <p id="login-error" class="text-red-500 text-sm mb-4 hidden" data-lang-key="login.error"></p>
                     <div>
                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out" data-lang-key="login.button">
-                            Login
                         </button>
                     </div>
                 </form>
@@ -393,6 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function navigateTo(hash, fromHistory = false) {
         let pageId = hash.substring(1);
+        if (!pageId) pageId = 'home';
         
         if (pageId === 'team-hub' && !teamHubUnlocked) pageId = 'login';
         if (pageId === 'login' && teamHubUnlocked) pageId = 'team-hub';
@@ -421,9 +421,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!fromHistory) window.location.hash = pageId;
             
             updateActiveNavLink(pageId);
-            updateLanguage();
+            updateLanguageText();
             
             if (pageId === 'login') setupLoginForm();
+            if (pageId === 'home') buildHomeCards();
         }
     }
 
@@ -441,14 +442,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function switchLanguage() {
         currentLang = currentLang === 'en' ? 'id' : 'en';
         localStorage.setItem('sopLang', currentLang);
-        updateLanguage();
+        updateLanguageText();
+        // Re-render the current page to apply new language to content
+        navigateTo(window.location.hash || '#home', true);
     }
 
-    function updateLanguage() {
-        buildSidebar(); // Rebuild sidebar to get new text
-        const currentPageId = window.location.hash.substring(1) || 'home';
-        navigateTo(currentPageId, true); // Re-render current page with new language
-        
+    function updateLanguageText() {
         document.querySelectorAll('[data-lang-key]').forEach(el => {
             const key = el.dataset.langKey;
             const translation = getTranslation(key);
@@ -461,8 +460,6 @@ document.addEventListener('DOMContentLoaded', () => {
             flagEn.classList.toggle('hidden', currentLang !== 'en');
             flagId.classList.toggle('hidden', currentLang !== 'id');
         }
-        
-        if (currentPageId === 'home') buildHomeCards();
     }
 
     function getTranslation(key) {
@@ -547,6 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Initial Load ---
+    buildSidebar();
     const initialPage = window.location.hash ? window.location.hash.substring(1) : 'home';
     navigateTo(initialPage, true);
 });
