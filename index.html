@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS - Using CDN for immediate functionality -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
@@ -65,6 +65,9 @@
         /* Mobile sidebar transition */
         #sidebar {
             transition: transform 0.3s ease-in-out;
+        }
+        .prose {
+            max-width: none;
         }
     </style>
 </head>
@@ -140,7 +143,7 @@
     <template id="template-content-page">
         <div class="page bg-white p-6 sm:p-8 rounded-lg shadow-sm max-w-4xl mx-auto">
              <h1 id="content-title" class="text-3xl font-extrabold text-slate-800 mb-6 uppercase tracking-wide"></h1>
-             <div id="content-body" class="prose prose-indigo max-w-none"></div>
+             <div id="content-body" class="prose max-w-none"></div>
         </div>
     </template>
     
@@ -206,29 +209,13 @@ const contentData = {
                 content: `
                     <p class="text-sm text-slate-500 mb-6">Version 1.0 | Last Updated: 1 July 2025</p>
                     <p class="mb-6">Welcome to the 7.agency team. Whether you are a full-time team member or a trusted vendor partner, you are the face of our company on a client's most important day. This handbook outlines the non-negotiable core principles that ensure we deliver the exceptional experience our clients expect. Adherence to these standards is mandatory for everyone working at one of our events.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                            <h2 class="text-xl font-bold text-slate-800 mb-3 uppercase">1. The Client Promise</h2>
-                            <p>Everything we do is centered around creating a perfect, seamless, and unforgettable wedding day for our clients. The Project Manager (PM) is the lead coordinator, responsible for every detail and for solving any issue that may arise. Our collective goal is to work together as a single, coordinated team to flawlessly execute the client's vision.</p>
-                        </div>
-                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                            <h2 class="text-xl font-bold text-slate-800 mb-3 uppercase">3. On-Site Challenges</h2>
-                            <p class="mb-2">Non-standard situations can occur. When they do, we respond with calm professionalism.</p><ul class="list-disc list-outside ml-5 mt-2 space-y-1"><li><strong>Your First Responsibility:</strong> Your primary contact for any problem, question, or deviation from the plan is the <strong>Project Manager (PM)</strong>.</li><li><strong>Communicate Immediately:</strong> Do not wait for a problem to escalate. Inform the PM as soon as you become aware of an issue.</li></ul>
-                        </div>
-                        <div class="md:col-span-2 bg-slate-50 p-6 rounded-lg border border-slate-200">
-                            <h2 class="text-xl font-bold text-slate-800 mb-3 uppercase">2. Universal Code of Conduct</h2>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                                <div><h3 class="font-semibold">Appearance & Hygiene</h3><ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-sm"><li>Be Presentable & Clean</li><li>Appropriate Attire</li><li>Clean Footwear</li></ul></div>
-                                <div><h3 class="font-semibold">Attitude</h3><ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-sm"><li>Client-Focused</li><li>Solution-Oriented</li><li>Team Player</li></ul></div>
-                                <div><h3 class="font-semibold">Etiquette</h3><ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-sm"><li>Respect Venue & Privacy</li><li>Discreet Conduct</li><li>Punctual</li></ul></div>
-                            </div>
-                        </div>
-                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 md:col-span-2">
-                            <h2 class="text-xl font-bold text-slate-800 mb-3 uppercase">4. Our Commitment to Quality</h2>
-                             <p class="mb-2">These principles are the foundation of our reputation. They are not optional.</p><ul class="list-disc list-outside ml-5 mt-2 space-y-1"><li><strong>Accountability:</strong> Every team member and vendor partner is held accountable for upholding these standards.</li><li><strong>Consequences:</strong> Failure to adhere to this Code of Conduct will be addressed by the Project Manager and may result in penalties, including removal from the event and exclusion from future projects.</li></ul>
-                        </div>
+                    <div class="space-y-8">
+                        <div><h2 class="text-2xl font-bold text-slate-800 section-title uppercase">1. The Client Promise: Our Guiding Star</h2><p>Everything we do is centered around creating a perfect, seamless, and unforgettable wedding day for our clients. The Project Manager (PM) is the lead coordinator, responsible for every detail and for solving any issue that may arise. Our collective goal is to work together as a single, coordinated team to flawlessly execute the client's vision.</p></div>
+                        <div><h2 class="text-2xl font-bold text-slate-800 section-title uppercase">2. Universal Code of Conduct</h2><p class="mb-4">These principles are the minimum standard of behavior and presentation expected from every individual on-site.</p><div class="space-y-4 ml-4"><div><h3 class="font-semibold text-lg">a. Professional Appearance & Hygiene</h3><ul class="list-disc list-outside ml-5 mt-2 space-y-1"><li><strong>Be Presentable:</strong> Arrive in a clean, ironed, and appropriate uniform or attire as specified for the event. Personal hygiene is essential; you must be well-groomed and smell fresh.</li><li><strong>Appropriate Attire:</strong> Unless a specific uniform is required, clothing should be professional and conservative. Ripped jeans, shorts, and casual T-shirts with large prints are not permitted.</li><li><strong>Footwear:</strong> Shoes must be clean and in good condition. Closed-toe shoes are required for most roles unless otherwise specified for beach events.</li></ul></div><div><h3 class="font-semibold text-lg">b. Positive & Professional Attitude</h3><ul class="list-disc list-outside ml-5 mt-2 space-y-1"><li><strong>Be Client-Focused:</strong> Your primary focus is the client's experience. Be friendly, positive, and always willing to help.</li><li><strong>Be Solution-Oriented:</strong> If a challenge arises, focus on finding a solution. If you cannot solve it yourself, you must immediately report it to the on-site Project Manager.</li><li><strong>Be a Team Player:</strong> We succeed as a team. Be proactive and offer help to colleagues when you see a need. An "it's not my job" attitude is not acceptable.</li></ul></div><div><h3 class="font-semibold text-lg">c. On-Site Behavior & Etiquette</h3><ul class="list-disc list-outside ml-5 mt-2 space-y-1"><li><strong>Respect the Venue:</strong> Keep the event space, both front-of-house and back-of-house, clean and tidy. All personal items and equipment should be stored discreetly and out of sight of the clients and their guests.</li><li><strong>Respect Client Privacy:</strong> An event is a private, intimate occasion. Do not allow strangers to enter the event space. Politely ask onlookers to keep their distance.</li><li><strong>Discreet Conduct:</strong> Do not eat, smoke, or take personal phone calls in any area visible to clients or guests. Use designated staff areas only. Keep conversations with colleagues professional and at a low volume.</li><li><strong>Punctuality:</strong> Arrive at the time specified in the rundown. Late arrivals are not acceptable.</li></ul></div></div></div>
+                        <div><h2 class="text-2xl font-bold text-slate-800 section-title uppercase">3. Handling On-Site Challenges</h2><p class="mb-2">Non-standard situations can occur. When they do, we respond with calm professionalism.</p><ul class="list-disc list-outside ml-5 mt-2 space-y-1"><li><strong>Your First Responsibility:</strong> Your primary contact for any problem, question, or deviation from the plan is the <strong>Project Manager (PM)</strong>.</li><li><strong>Communicate Immediately:</strong> Do not wait for a problem to escalate. Inform the PM as soon as you become aware of an issue, no matter how small it seems. This allows the leadership team to solve it effectively.</li></ul></div>
+                        <div><h2 class="text-2xl font-bold text-slate-800 section-title uppercase">4. Our Commitment to Quality</h2><p class="mb-2">These principles are the foundation of our reputation. They are not optional.</p><ul class="list-disc list-outside ml-5 mt-2 space-y-1"><li><strong>Accountability:</strong> Every team member and vendor partner is held accountable for upholding these standards.</li><li><strong>Consequences:</strong> Failure to adhere to this Code of Conduct will be addressed by the Project Manager and may result in penalties, including removal from the event and exclusion from future projects.</li></ul></div>
                     </div>
-                    `
+                    <p class="font-semibold text-center pt-4">Thank you for your professionalism and your commitment to making every event a perfect experience.</p>`
             },
             "vendor-portal": {
                 title: "Vendor Partnership Guide",
