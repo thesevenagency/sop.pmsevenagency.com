@@ -398,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pageId === 'login' && teamHubUnlocked) pageId = 'team-hub';
         
         mainContent.innerHTML = '';
-        let template, contentTitle, contentBody;
+        let template;
 
         if (pageId === 'home') {
             template = document.getElementById('template-home');
@@ -406,26 +406,35 @@ document.addEventListener('DOMContentLoaded', () => {
             template = document.getElementById('template-login');
         } else {
             template = document.getElementById('template-content-page');
-            contentTitle = getTranslation(`pages.${pageId}.title`);
-            contentBody = getTranslation(`pages.${pageId}.content`);
         }
         
         if (template) {
             const clone = template.content.cloneNode(true);
-            if (pageId !== 'home' && pageId !== 'login') {
-                clone.getElementById('content-title').innerHTML = contentTitle;
-                clone.getElementById('content-body').innerHTML = contentBody;
-            }
             mainContent.appendChild(clone);
             
             if (!fromHistory) window.location.hash = pageId;
             
-            updateActiveNavLink(pageId);
-            updateLanguageText();
-            
-            if (pageId === 'login') setupLoginForm();
-            if (pageId === 'home') buildHomeCards();
+            renderPageContent(pageId);
         }
+    }
+
+    function renderPageContent(pageId) {
+        updateActiveNavLink(pageId);
+        updateLanguageText(); // This will translate all static keys
+        
+        // Render dynamic content for the specific page
+        if (pageId === 'home') {
+            buildHomeCards();
+        } else if (pageId !== 'login') {
+            const title = getTranslation(`pages.${pageId}.title`);
+            const body = getTranslation(`pages.${pageId}.content`);
+            const titleEl = document.getElementById('content-title');
+            const bodyEl = document.getElementById('content-body');
+            if (titleEl) titleEl.innerHTML = title;
+            if (bodyEl) bodyEl.innerHTML = body;
+        }
+
+        if (pageId === 'login') setupLoginForm();
     }
 
     function updateActiveNavLink(pageId) {
@@ -442,8 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function switchLanguage() {
         currentLang = currentLang === 'en' ? 'id' : 'en';
         localStorage.setItem('sopLang', currentLang);
-        updateLanguageText();
-        // Re-render the current page to apply new language to content
+        buildSidebar();
         navigateTo(window.location.hash || '#home', true);
     }
 
